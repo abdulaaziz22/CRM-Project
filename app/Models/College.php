@@ -15,10 +15,6 @@ class College extends Model
      */
     protected $fillable = ['name'];
 
-    public function Departments ()
-    {
-        return $this->hasMany(Department::class);
-    }
     public function buildings ()
     {
         return $this->hasMany(Building::class);

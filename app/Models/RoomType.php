@@ -14,4 +14,9 @@ class RoomType extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    public function Rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }

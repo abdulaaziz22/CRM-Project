@@ -20,4 +20,9 @@ class Building extends Model
         return $this->belongsTo(College::class,'college_id','id');
     }
 
+    public function Rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
 }

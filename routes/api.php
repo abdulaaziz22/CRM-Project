@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     CollegeController,
     BuildingController,
     RoomTypeController,
+    RoomController,
 };
 
 /*
@@ -23,7 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('college',CollegeController::class);
+Route::apiResource('College',CollegeController::class);
 Route::apiResource('Building',BuildingController::class);
-Route::apiResource('Building',RoomTypeController::class);
+Route::apiResource('RoomType',RoomTypeController::class);
+Route::apiResource('Room',RoomController::class);
+
 

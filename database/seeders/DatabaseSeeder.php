@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CollegeSeeder::class,
             BuildingSeeder::class,
             RoomTypeSeeder::class,
+            RoomSeeder::class,
         ]);
     }
 }
