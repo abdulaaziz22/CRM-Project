@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Building extends Model
 {
     use HasFactory;
     /**
@@ -19,4 +19,5 @@ class Department extends Model
     {
         return $this->belongsTo(College::class,'college_id','id');
     }
+
 }

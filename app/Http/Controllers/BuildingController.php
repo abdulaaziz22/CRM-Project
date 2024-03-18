@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\Building;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class BuildingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(Building $building)
     {
         //
     }
@@ -34,7 +34,7 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Building $building)
     {
         //
     }
@@ -42,7 +42,7 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(Building $building)
     {
         //
     }

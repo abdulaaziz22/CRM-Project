@@ -13,8 +13,9 @@ class CollegeSeeder extends Seeder
      */
     public function run(): void
     {
-        College::create(['name'=>'الهندسة والبترول']);
-        College::create(['name'=>'الطب']);
-        College::create(['name'=>'البنات']);
+        $Colleges=['الهندسة والبترول','الطب','البنات','القانون','التعليم المفتوح','العلوم الادارية'];
+        foreach($Colleges as $College){
+            College::create(['name'=>$College]);
+        }
     }
 }
