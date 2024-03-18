@@ -21,9 +21,5 @@ class BuildingSeeder extends Seeder
                 'college_id' => $collegeIds[$i],
             ]);
         }
-        // Building::create(['name'=>'A','college_id'=>'1']);
-        // Building::create(['name'=>'B','college_id'=>'1']);
-        // Building::create(['name'=>'C','college_id'=>'1']);
-        // Building::create(['name'=>'D','college_id'=>'1']);
     }
 }

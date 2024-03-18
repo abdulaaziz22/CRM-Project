@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CollegeSeeder::class,
             BuildingSeeder::class,
+            RoomTypeSeeder::class,
         ]);
     }
 }
