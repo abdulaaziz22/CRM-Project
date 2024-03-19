@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
             BuildingSeeder::class,
             RoomTypeSeeder::class,
             RoomSeeder::class,
+            CategorySeeder::class,
+            PrioritySeeder::class,
+            RequestStatusSeeder::class,
         ]);
     }
 }

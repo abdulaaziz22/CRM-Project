@@ -7,6 +7,8 @@ use App\Http\Controllers\{
     BuildingController,
     RoomTypeController,
     RoomController,
+    RequestController,
+
 };
 
 /*
@@ -28,5 +30,7 @@ Route::apiResource('College',CollegeController::class);
 Route::apiResource('Building',BuildingController::class);
 Route::apiResource('RoomType',RoomTypeController::class);
 Route::apiResource('Room',RoomController::class);
+Route::apiResource('Request',RequestController::class);
+Route::apiResource('Tracking',TrackingController::class);
 
 
