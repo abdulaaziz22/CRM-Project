@@ -10,9 +10,10 @@ class BuildingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() //  https://example.com?college_id=[value]
     {
-        //
+        $Bulids=Building::filter()->dynamicPaginate();
+        return response()->json($Bulids, 200);
     }
 
     /**
