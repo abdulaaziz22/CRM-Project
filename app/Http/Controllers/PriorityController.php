@@ -12,7 +12,8 @@ class PriorityController extends Controller
      */
     public function index()
     {
-        //
+        $Priorities=Priority::get();
+        return response()->json($Priorities, 200);
     }
 
     /**

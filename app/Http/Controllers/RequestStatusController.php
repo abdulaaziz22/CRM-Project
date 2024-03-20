@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Request_Status;
+use App\Models\RequestStatus;
 use Illuminate\Http\Request;
 
 class RequestStatusController extends Controller
@@ -12,7 +12,9 @@ class RequestStatusController extends Controller
      */
     public function index()
     {
-        //
+        $Status=RequestStatus::get();
+        return response()->json($Status, 200);
+
     }
 
     /**

@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Mehradsadeghi\FilterQueryString\FilterQueryString;
 
 class Room extends Model
 {
-    use HasFactory;
+    use HasFactory,FilterQueryString;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['name','build_id','type_id'];
-
+    protected $filters = ['build_id','type_id'];
     public function RoomType()
     {
         return $this->belongsTo(RoomType::class,'type_id','id');

@@ -18,5 +18,10 @@ class RoomSeeder extends Seeder
             'build_id'=>'1',
             'type_id'=>'1',
         ]);
+        Room::create([
+            'name'=>'102',
+            'build_id'=>'2',
+            'type_id'=>'3',
+        ]);
     }
 }

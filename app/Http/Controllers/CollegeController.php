@@ -12,7 +12,8 @@ class CollegeController extends Controller
      */
     public function index()
     {
-        //
+        $Colleges=College::dynamicPaginate();
+        return response()->json($Colleges, 200);
     }
 
     /**

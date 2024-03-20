@@ -10,9 +10,10 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() //  https://example.com?build_id=[value] | https://example.com?type_id=[value]
     {
-        //
+        $Rooms=Room::filter()->dynamicPaginate();
+        return response()->json($Rooms, 200);
     }
 
     /**

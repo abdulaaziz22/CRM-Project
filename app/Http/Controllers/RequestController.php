@@ -35,7 +35,6 @@ class RequestController extends Controller
             'college_id'=>['required',Rule::exists('colleges','id')],
             'files' => ['required','file'],
             'files.*' =>['required','file','max:2048'],
-
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
