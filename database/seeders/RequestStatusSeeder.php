@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\RequestStatus;
 use Illuminate\Database\Seeder;
-use App\Models\Request_Status;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
 class RequestStatusSeeder extends Seeder
@@ -17,7 +17,7 @@ class RequestStatusSeeder extends Seeder
         $status = ['معلق','قيد التنفيد','مكتمل'];
         foreach($status as $std)
         {
-            Request_Status::create(['status'=>$std]);
+            RequestStatus::create(['status'=>$std]);
         }
     }
 }

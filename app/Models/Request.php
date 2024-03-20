@@ -22,5 +22,9 @@ class Request extends Model
         'college_id',
         'file_path_id'
     ];
+    public function filePaths()
+    {
+        return $this->hasMany(FilePath::class);
+    }
 
 }

@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Request;
+use App\Models\FilePath;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Models\Request as MyRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\validator;
+
 
 class RequestController extends Controller
 {
@@ -20,7 +25,48 @@ class RequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = validator::make($request->all(),[
+            'title'=>['required','min:2'],
+            'description'=>['required','min:2'],
+            'room_id'=>['required',Rule::exists('rooms','id')],
+            'status_id'=>['required',Rule::exists('request_statuses','id')],
+            'priority_id'=>['required',Rule::exists('priorities','id')],
+            'category_id'=>['required',Rule::exists('categories','id')],
+            'college_id'=>['required',Rule::exists('colleges','id')],
+            'files' => ['required'],
+            'files.*' =>['required','file','max:2048'],
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $MyRequest=MyRequest::create([
+            'date'=>now(),
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'close_at'=>null,
+            'room_id'=>$request->room_id,
+            'status_id'=>$request->status_id,
+            'priority_id'=>$request->priority_id,
+            'category_id'=>$request->category_id,
+            'college_id'=>$request->college_id,
+            'user_id'=>'1',
+        ]);
+        foreach ($request->files as $file) {
+            $name='awad.'.$file->getclientoriginalextension();
+            $path=Storage::putFileAs('Request',$file,$name);
+            // return $path;
+            $filePath = FilePath::create([
+                'path' => $path,
+                'tracking_id'=>null,
+                'request_id'=>$MyRequest->id
+            ]);
+            // $MyRequest->filePaths()->attach($filePath->id);
+        }
+        return response()->json([
+            'message'=>'Request successfully stored',
+            'data'=>$MyRequest,
+        ], 200);
     }
 
     /**
@@ -34,7 +80,7 @@ class RequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Request $request)
+    public function update(Request $request)
     {
         //
     }

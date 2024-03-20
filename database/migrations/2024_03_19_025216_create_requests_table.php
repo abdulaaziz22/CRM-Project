@@ -16,14 +16,14 @@ return new class extends Migration
             $table->date('date');
             $table->string('title');
             $table->string('description');
-            $table->date('close_at');
+            $table->date('close_at')->nullable();
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('priority_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('college_id');
-            $table->unsignedBigInteger('file_path_id');
+
 
 
             $table->foreign('room_id')->references('id')
@@ -44,8 +44,6 @@ return new class extends Migration
             $table->foreign('college_id')->references('id')
             ->on('colleges')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('file_path_id')->references('id')
-            ->on('file_paths')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

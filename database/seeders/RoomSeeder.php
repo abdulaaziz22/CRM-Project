@@ -13,6 +13,10 @@ class RoomSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Room::create([
+            'name'=>'101',
+            'build_id'=>'1',
+            'type_id'=>'1',
+        ]);
     }
 }

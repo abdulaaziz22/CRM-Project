@@ -19,16 +19,12 @@ return new class extends Migration
             $table->string('subject');
             $table->unsignedBigInteger('request_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('file_path_id');
 
             $table->foreign('request_id')->references('id')
             ->on('requests')->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('user_id')->references('id')
             ->on('users')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->foreign('file_path_id')->references('id')
-            ->on('file_paths')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

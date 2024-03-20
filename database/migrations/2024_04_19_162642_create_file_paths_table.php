@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('file_paths', function (Blueprint $table) {
             $table->id();
             $table->string('path');
+            $table->unsignedBigInteger('tracking_id')->nullable();
+            $table->unsignedBigInteger('request_id');
+
+            $table->foreign('tracking_id')->references('id')
+            ->on('trackings')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('request_id')->references('id')
+            ->on('requests')->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
