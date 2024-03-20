@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('path');
             $table->unsignedBigInteger('tracking_id')->nullable();
-            $table->unsignedBigInteger('request_id');
+            $table->unsignedBigInteger('request_id')->nullable();
 
             $table->foreign('tracking_id')->references('id')
             ->on('trackings')->onUpdate('cascade')->onDelete('cascade');

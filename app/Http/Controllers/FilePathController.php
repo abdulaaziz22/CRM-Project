@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FilePath;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FilePathController extends Controller
 {
@@ -18,9 +19,17 @@ class FilePathController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public static function store($files,$request_id,$tracking_id)
     {
-        //
+        foreach ($files as $file) {
+            $File_name=uniqid('',true).'.'.$file->getclientoriginalextension();
+            $path=Storage::putFileAs('Request',$file,$File_name);
+            $filePath = FilePath::create([
+                'path' => $path,
+                'tracking_id'=>$tracking_id,
+                'request_id'=>$request_id
+            ]);
+        }
     }
 
     /**

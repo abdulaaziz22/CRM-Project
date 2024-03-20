@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
             $table->string('title');
             $table->string('description');
             $table->date('close_at')->nullable();

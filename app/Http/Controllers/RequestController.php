@@ -6,8 +6,8 @@ use App\Models\FilePath;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Request as MyRequest;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\validator;
+use App\Http\Controllers\FilePathController;
 
 
 class RequestController extends Controller
@@ -33,7 +33,7 @@ class RequestController extends Controller
             'priority_id'=>['required',Rule::exists('priorities','id')],
             'category_id'=>['required',Rule::exists('categories','id')],
             'college_id'=>['required',Rule::exists('colleges','id')],
-            'files' => ['required'],
+            'files' => ['required','file'],
             'files.*' =>['required','file','max:2048'],
 
         ]);
@@ -41,7 +41,6 @@ class RequestController extends Controller
             return response()->json($validator->errors(), 422);
         }
         $MyRequest=MyRequest::create([
-            'date'=>now(),
             'title'=>$request->title,
             'description'=>$request->description,
             'close_at'=>null,
@@ -52,17 +51,7 @@ class RequestController extends Controller
             'college_id'=>$request->college_id,
             'user_id'=>'1',
         ]);
-        foreach ($request->files as $file) {
-            $name='awad.'.$file->getclientoriginalextension();
-            $path=Storage::putFileAs('Request',$file,$name);
-            // return $path;
-            $filePath = FilePath::create([
-                'path' => $path,
-                'tracking_id'=>null,
-                'request_id'=>$MyRequest->id
-            ]);
-            // $MyRequest->filePaths()->attach($filePath->id);
-        }
+        FilePathController::store($request->files,$MyRequest->id,$tracking_id=null);
         return response()->json([
             'message'=>'Request successfully stored',
             'data'=>$MyRequest,
