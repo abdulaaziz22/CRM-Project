@@ -17,7 +17,8 @@ class RequestController extends Controller
      */
     public function index()
     {
-        //
+        $MyRequest = MyRequest::filter()->dynamicPaginate();
+        return response()->json($MyRequest, 200);
     }
 
     /**
@@ -60,9 +61,10 @@ class RequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show($request)
     {
-        //
+        $MyRequest = MyRequest::where('id', '=', $request)->get();
+        return response()->json($MyRequest, 200);
     }
 
     /**

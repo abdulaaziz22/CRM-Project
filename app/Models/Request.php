@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Mehradsadeghi\FilterQueryString\FilterQueryString;
+
 
 class Request extends Model
 {
-    use HasFactory;
+    use HasFactory ,FilterQueryString;
 
     protected $fillable = [
         'date',
@@ -22,6 +24,16 @@ class Request extends Model
         'college_id',
         'file_path_id'
     ];
+
+    protected $filters = [
+        'college_id', 
+        'status_id',
+        'priority_id',
+        'category_id',
+        'room_id',
+        ];
+
+
     public function filePaths()
     {
         return $this->hasMany(FilePath::class);
