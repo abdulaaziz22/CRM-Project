@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username');
+            $table->string('image')->nullable();
+            $table->string('phone');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('user_type_id');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('user_type_id')->references('id')
+            ->on('user_types')->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 

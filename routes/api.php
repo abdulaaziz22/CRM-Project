@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\{
     CollegeController,
     BuildingController,
@@ -11,7 +12,7 @@ use App\Http\Controllers\{
     RequestStatusController,
     PriorityController,
     CategoryController,
-
+    AuthController,
 };
 
 /*
@@ -38,5 +39,11 @@ Route::apiResource('RequestStatus',RequestStatusController::class);
 Route::apiResource('Priority',PriorityController::class);
 Route::apiResource('Category',CategoryController::class);
 Route::apiResource('Tracking',TrackingController::class);
+Route::post('register',[AuthController::class,'register']);
+Route::post('login',[AuthController::class,'login']);
+Route::middleware('auth:api')->post('logout', 'AuthController@logout');
+
+
+
 
 
