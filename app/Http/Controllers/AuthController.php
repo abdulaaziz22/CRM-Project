@@ -23,14 +23,14 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        
+
         $image = null;
         if ($request->image)
         {
             $File_name=uniqid('',true).'.'.$request->image->getclientoriginalextension();
             $image=Storage::putFileAs('UserImage',$request->image,$File_name);
         }
-    
+
         $user = User::create([
             'name'=>$request->name,
             'password'=>$request->password,
@@ -69,13 +69,13 @@ class AuthController extends Controller
         } else {
             $response = ["message" =>'User does not exist'];
             return response($response, 422);
-        }        
+        }
     }
 
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        
+
         return response()->json(['message' => 'Successfully logged out']);
     }
 }
