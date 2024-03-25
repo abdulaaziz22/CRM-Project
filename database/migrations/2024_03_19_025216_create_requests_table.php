@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->date('close_at')->nullable();
-            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('room_id')->nullable();
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('priority_id');
+            $table->unsignedBigInteger('priority_id')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('college_id');
 
