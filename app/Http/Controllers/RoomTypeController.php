@@ -12,7 +12,8 @@ class RoomTypeController extends Controller
      */
     public function index()
     {
-        //
+        $RoomTypes=RoomType::dynamicPaginate();
+        return response()->json($RoomTypes, 200);
     }
 
     /**
