@@ -48,34 +48,34 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $validator=Validator::make($request->all(),[
-            'email'=> 'required|email',
-            'password'=>'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+{
+  $validator = Validator::make($request->all(), [
+    'email' => 'required|email',
+    'password' => 'required',
+  ]);
 
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('authToken')->accessToken;
-                return response($token->token, 200);
-            } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
-            }
-        } else {
-            $response = ["message" =>'User does not exist'];
-            return response($response, 422);
-        }
-    }
+  if ($validator->fails()) {
+    return response()->json($validator->errors(), 422);
+  }
+
+  $user = User::where('email', $request->email)->first();
+
+  if ($user && Hash::check($request->password, $user->password)) {
+    $token = $user->createToken('authToken')->plainTextToken;
+    return response()->json([
+      'access_token' => $token,
+      'user' => $user,
+    ]);
+  } else {
+    return response()->json([
+      'message' => $user ? 'Password mismatch' : 'User does not exist'
+    ], 422);
+  }
+}
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-
+        auth()->user()->tokens()->delete();
         return response()->json(['message' => 'Successfully logged out']);
     }
 }
