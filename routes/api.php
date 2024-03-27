@@ -34,7 +34,7 @@ Route::apiResource('College',CollegeController::class);
 Route::apiResource('Building',BuildingController::class);
 Route::apiResource('RoomType',RoomTypeController::class);
 Route::apiResource('Room',RoomController::class);
-Route::apiResource('Request',RequestController::class)->middleware('auth:sanctum');
+Route::apiResource('Request',RequestController::class);
 Route::apiResource('RequestStatus',RequestStatusController::class);
 Route::apiResource('Priority',PriorityController::class);
 Route::apiResource('Category',CategoryController::class);

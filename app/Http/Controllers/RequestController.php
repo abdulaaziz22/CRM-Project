@@ -47,7 +47,7 @@ class RequestController extends Controller
             'priority_id'=>null,
             'category_id'=>$request->category_id,
             'college_id'=>$request->college_id,
-            'user_id'=>auth()->user()->id,
+            'user_id'=>'1',
         ]);
         FilePathController::store($request,$MyRequest->id,$tracking_id=null);
         return response()->json([
