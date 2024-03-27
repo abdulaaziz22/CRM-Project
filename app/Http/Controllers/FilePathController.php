@@ -19,17 +19,28 @@ class FilePathController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public static function store($files,$request_id,$tracking_id)
+    public static function store($request,$request_id,$tracking_id)
     {
-        foreach ($files as $file) {
-            $File_name=uniqid('',true).'.'.$file->getclientoriginalextension();
-            $path=Storage::putFileAs('Request',$file,$File_name);
-            $filePath = FilePath::create([
-                'path' => $path,
+        foreach($request->file_path as $file) {
+            $extions = $file->getclientoriginalextension();
+            // $name = $lecture_details->getClientOriginalName();
+            $filename = uniqid(' ',true).'.'.$extions;
+            $File_path = $file->move('storage/Request'.$filename);
+            FilePath::create([
+                'path' => $File_path,
                 'tracking_id'=>$tracking_id,
                 'request_id'=>$request_id
             ]);
         }
+        // foreach ($files as $file) {
+        //     $File_name=uniqid('',true).'.'.$file->getclientoriginalextension();
+        //     $path=Storage::putFileAs('Request',$file,$File_name);
+        //     $filePath = FilePath::create([
+        //         'path' => $path,
+        //         'tracking_id'=>$tracking_id,
+        //         'request_id'=>$request_id
+        //     ]);
+        // }
     }
 
     /**
