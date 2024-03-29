@@ -21,7 +21,7 @@ class FilePathController extends Controller
      */
     public static function store($request,$request_id,$tracking_id)
     {
-        foreach($request->file_path as $file) {
+        foreach($request->files as $file) {
             $extions = $file->getclientoriginalextension();
             $filename = uniqid('',true).'.'.$extions;
             $File_path = Storage::putFileAs('Request',$file,$filename);
