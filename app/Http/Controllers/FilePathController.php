@@ -23,9 +23,9 @@ class FilePathController extends Controller
     {
         foreach($request->files as $file) {
             $extions = $file->getclientoriginalextension();
-            $filename = uniqid('',true).'.'.$extions;
-            $File_path = Storage::putFileAs('Request',$file,$filename);
-            $File_path = 'storage/'.$File_path;
+            // $name = $lecture_details->getClientOriginalName();
+            $filename = uniqid(' ',true).'.'.$extions;
+            $File_path = Storage::putFileAs('Request',$file,$File_name);
             FilePath::create([
                 'path' => $File_path,
                 'tracking_id'=>$tracking_id,
