@@ -32,7 +32,7 @@ class RequestController extends Controller
             'room_id'=>['required',Rule::exists('rooms','id')],
             'category_id'=>['required',Rule::exists('categories','id')],
             'college_id'=>['required',Rule::exists('colleges','id')],
-            // 'file_path' => ['required','file'],
+            'file_path' => ['nullable','file'],
             'file_path.*' =>['required','file'],
         ]);
         if ($validator->fails()) {
@@ -49,7 +49,9 @@ class RequestController extends Controller
             'college_id'=>$request->college_id,
             'user_id'=>'1',
         ]);
-        FilePathController::store($request,$MyRequest->id,$tracking_id=null);
+        if(!empty($request->file_path)){
+            FilePathController::store($request,$MyRequest->id,$tracking_id=null);
+        }
         return response()->json([
             'message'=>'Request successfully stored',
             'data'=>$MyRequest,
