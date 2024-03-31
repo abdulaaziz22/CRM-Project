@@ -23,7 +23,7 @@ class FilePathController extends Controller
     {
         foreach($request->file_path as $file) {
             $extions = $file->getclientoriginalextension();
-            $filename = uniqid(' ',true).'.'.$extions;
+            $filename = uniqid('',true).'.'.$extions;
             $File_path = Storage::putFileAs('Request',$file,$filename);
             $File_path ='storage/'.$File_path;
             FilePath::create([

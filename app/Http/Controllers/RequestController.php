@@ -32,7 +32,7 @@ class RequestController extends Controller
             'room_id'=>['required',Rule::exists('rooms','id')],
             'category_id'=>['required',Rule::exists('categories','id')],
             'college_id'=>['required',Rule::exists('colleges','id')],
-            'file_path' => ['nullable','file'],
+            'file_path' => ['nullable'],
             'file_path.*' =>['required','file'],
         ]);
         if ($validator->fails()) {
