@@ -8,6 +8,9 @@ use Illuminate\Validation\Rule;
 use App\Models\Request as MyRequest;
 use Illuminate\Support\Facades\validator;
 use App\Http\Controllers\FilePathController;
+use App\Models\College;
+use App\Models\Priority;
+use App\Models\RequestStatus;
 
 
 class RequestController extends Controller
@@ -63,17 +66,48 @@ class RequestController extends Controller
      */
     public function show($request)
     {
-        $MyRequest = MyRequest::where('id', '=', $request)->get();
-        return response()->json($MyRequest, 200);
+        $MyRequest = MyRequest::where('id', '=', $request)->first();
+        $college = College::where('id', '=', $MyRequest->college_id)->first();
+        $priority = Priority::where('id', '=', $MyRequest->priority_id)->first();
+        $status = RequestStatus::where('id', '=', $MyRequest->status_id)->first();
+
+        $data = [
+            'Request' => $MyRequest,
+            'College' => $college->name,
+            'Priority'=> $priority->name,
+            'Status' => $status->status
+        ];
+        return response()->json($data, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request , $id)
     {
-        //
+        $MyRequest = MyRequest::where('id', '=', $id)->first();
+
+        $validator = Validator::make($request->all(), [
+            'status_id'=>[Rule::exists('request_statuses','id')],
+            'priority_id'=>[Rule::exists('priorities','id')],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $MyRequest->update([
+            'status_id' => $request->status_id,
+            'priority_id' => $request->priority_id,
+        ]);
+
+
+        return response()->json([
+            'message'=>'Request successfully updated',
+            'data'=>$MyRequest,
+            ], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -82,4 +116,5 @@ class RequestController extends Controller
     {
         //
     }
+
 }

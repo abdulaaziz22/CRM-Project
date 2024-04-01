@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Mehradsadeghi\FilterQueryString\FilterQueryString;
+use App\Models\RequestStatus;
+use App\Models\Priority;
+use App\Models\Category;
+use App\Models\Tracking;
 
 
 class Request extends Model
@@ -39,4 +43,23 @@ class Request extends Model
         return $this->hasMany(FilePath::class);
     }
 
+    public function RequestStatus()
+    {
+        return $this->belongsTo(RequestStatus::class,'status_id','id');
+    }
+    
+    public function Priority()
+    {
+        return $this->belongsTo(Priority::class,'priority_id','id');
+    }
+
+    public function Category()
+    {
+        return $this->belongsTo(Category::class,'category_id','id');
+    }
+    
+    public function Tracking()
+    {
+        return $this->hasMany(Tracking::class);
+    }
 }
