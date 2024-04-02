@@ -78,14 +78,15 @@ class RequestController extends Controller
         //     'Status' => $status->status
         // ];
 
-        $data = MyRequest::with('college', 'priority', 'RequestStatus' , 'Category')
+        $data = MyRequest::with('college','RequestStatus' , 'Category')
             ->where('id', $request)
+            ->with('Priority')
             ->first();
 
         $data = [
             'Request' => $MyRequest,
             'College' => $data->college->name,
-            'Priority' => $data->priority->name,
+            'Priority' => $data->priority,
             'Status' => $data->RequestStatus->status,
             'Category' => $data->Category->name
         ];
