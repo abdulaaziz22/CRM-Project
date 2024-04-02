@@ -20,7 +20,7 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $MyRequest = MyRequest::filter()->dynamicPaginate();
+        $MyRequest = MyRequest::filter()->with('Priority', 'RequestStatus', 'Category' , 'College')->dynamicPaginate();
         return response()->json($MyRequest, 200);
     }
 
@@ -67,16 +67,29 @@ class RequestController extends Controller
     public function show($request)
     {
         $MyRequest = MyRequest::where('id', '=', $request)->first();
-        $college = College::where('id', '=', $MyRequest->college_id)->first();
-        $priority = Priority::where('id', '=', $MyRequest->priority_id)->first();
-        $status = RequestStatus::where('id', '=', $MyRequest->status_id)->first();
+        // $college = College::where('id', '=', $MyRequest->college_id)->first();
+        // $priority = Priority::where('id', '=', $MyRequest->priority_id)->first();
+        // $status = RequestStatus::where('id', '=', $MyRequest->status_id)->first();
+
+        // $data = [
+        //     'Request' => $MyRequest,
+        //     'College' => $college->name,
+        //     'Priority'=> $priority->name,
+        //     'Status' => $status->status
+        // ];
+
+        $data = MyRequest::with('college', 'priority', 'RequestStatus' , 'Category')
+            ->where('id', $request)
+            ->first();
 
         $data = [
             'Request' => $MyRequest,
-            'College' => $college->name,
-            'Priority'=> $priority->name,
-            'Status' => $status->status
+            'College' => $data->college->name,
+            'Priority' => $data->priority->name,
+            'Status' => $data->RequestStatus->status,
+            'Category' => $data->Category->name
         ];
+
         return response()->json($data, 200);
     }
 

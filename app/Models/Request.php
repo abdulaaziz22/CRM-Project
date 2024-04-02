@@ -9,6 +9,8 @@ use App\Models\RequestStatus;
 use App\Models\Priority;
 use App\Models\Category;
 use App\Models\Tracking;
+use App\Models\College;
+
 
 
 class Request extends Model
@@ -58,6 +60,11 @@ class Request extends Model
         return $this->belongsTo(Category::class,'category_id','id');
     }
     
+    public function College()
+    {
+        return $this->belongsTo(College::class,'college_id','id');
+    }
+
     public function Tracking()
     {
         return $this->hasMany(Tracking::class);

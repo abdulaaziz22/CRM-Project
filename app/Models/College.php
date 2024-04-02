@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Request as MyRequest;
 
 class College extends Model
 {
@@ -18,5 +19,10 @@ class College extends Model
     public function buildings ()
     {
         return $this->hasMany(Building::class);
+    }
+
+    public function Request()
+    {
+        return $this->hasMany(MyRequest::class);
     }
 }
