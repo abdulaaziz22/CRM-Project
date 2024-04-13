@@ -66,18 +66,18 @@ class RequestController extends Controller
      */
     public function show($request)
     {
-        $data = MyRequest::with(['college', 'RequestStatus', 'Category', 'Priority', 'filePaths'])
+        $MyRequest = MyRequest::with(['college', 'RequestStatus', 'Category', 'Priority', 'filePaths'])
                  ->findOrFail($request);
         $data = [
-            'id'=>$data->id,
-            'title'=>$data->title,
-            'description'=>$data->description,
-            'close_at'=>$data->close_at,
-            'College' => $data->college,
-            'Priority' => $data->priority,
-            'Status' => $data->RequestStatus,
-            'Category' => $data->Category,
-            'filePaths'=>$data->filePaths,
+            'id'=>$MyRequest->id,
+            'title'=>$MyRequest->title,
+            'description'=>$MyRequest->description,
+            'close_at'=>$MyRequest->close_at,
+            'College' => $MyRequest->college,
+            'Priority' => $MyRequest->priority,
+            'Status' => $MyRequest->RequestStatus,
+            'Category' => $MyRequest->Category,
+            'filePaths'=>$MyRequest->filePaths,
         ];
         return response()->json(['data'=>$data], 200);
     }
