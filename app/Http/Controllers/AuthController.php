@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\validator;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\validator;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
         $validator=Validator::make($request->all(),[
-            'name' => ['required','max:100','string','min:2',],
-            'email' => 'required|email|unique:users',
+            'name' => ['required','max:100','string','min:2'],
+            'email' => ['required','email',Rule::unique('users')],
             'password'=>['required','min:6','confirmed'],
-            'username'=>['required','min:6','max:25','unique:users,username'],
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
+            'username'=>['required','min:6','max:25',Rule::unique('users')],
+            'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:9'],
+            'user_type_id'=>['required',Rule::exists('user_types','id')],
+            'image'=>[File::image()]
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -28,7 +32,8 @@ class AuthController extends Controller
         if ($request->image)
         {
             $File_name=uniqid('',true).'.'.$request->image->getclientoriginalextension();
-            $image=Storage::putFileAs('UserImage',$request->image,$File_name);
+            $image = Storage::putFileAs('UserImage',$request->image,$File_name);
+            $image ='storage/'.$image;
         }
 
         $user = User::create([
