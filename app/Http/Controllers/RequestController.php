@@ -20,7 +20,7 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $MyRequest = MyRequest::filter()->with('Priority', 'RequestStatus', 'Category' , 'College')->dynamicPaginate();
+        $MyRequest = MyRequest::filter()->with(['Priority', 'RequestStatus', 'Category' , 'College'])->dynamicPaginate();
         return response()->json($MyRequest, 200);
     }
 
@@ -36,7 +36,7 @@ class RequestController extends Controller
             'category_id'=>['required',Rule::exists('categories','id')],
             'college_id'=>['required',Rule::exists('colleges','id')],
             'file_path' => ['nullable'],
-            'file_path.*' =>['required','file'],
+            'file_path.*' =>['file'],
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -66,32 +66,21 @@ class RequestController extends Controller
      */
     public function show($request)
     {
-        $MyRequest = MyRequest::where('id', '=', $request)->first();
-        // $college = College::where('id', '=', $MyRequest->college_id)->first();
-        // $priority = Priority::where('id', '=', $MyRequest->priority_id)->first();
-        // $status = RequestStatus::where('id', '=', $MyRequest->status_id)->first();
-
-        // $data = [
-        //     'Request' => $MyRequest,
-        //     'College' => $college->name,
-        //     'Priority'=> $priority->name,
-        //     'Status' => $status->status
-        // ];
-
-        $data = MyRequest::with('college','RequestStatus' , 'Category')
-            ->where('id', $request)
-            ->with('Priority')
-            ->first();
-
+        $data = MyRequest::with(['college', 'RequestStatus', 'Category', 'Priority', 'filePaths'])
+                 ->findOrFail($request);
         $data = [
-            'Request' => $MyRequest,
-            'College' => $data->college->name,
+            'id'=>$data->id,
+            'title'=>$data->title,
+            'description'=>$data->description,
+            'close_at'=>$data->close_at,
+            'College' => $data->college,
             'Priority' => $data->priority,
-            'Status' => $data->RequestStatus->status,
-            'Category' => $data->Category->name
+            'Status' => $data->RequestStatus,
+            'Category' => $data->Category,
+            'filePaths'=>$data->filePaths,
         ];
 
-        return response()->json($data, 200);
+        return response()->json(['data'=>$data], 200);
     }
 
     /**
@@ -121,7 +110,7 @@ class RequestController extends Controller
             'data'=>$MyRequest,
             ], 200);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
