@@ -79,7 +79,6 @@ class RequestController extends Controller
             'Category' => $data->Category,
             'filePaths'=>$data->filePaths,
         ];
-
         return response()->json(['data'=>$data], 200);
     }
 
@@ -88,23 +87,18 @@ class RequestController extends Controller
      */
     public function update(Request $request , $id)
     {
-        $MyRequest = MyRequest::where('id', '=', $id)->first();
-
+        $MyRequest = MyRequest::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'status_id'=>[Rule::exists('request_statuses','id')],
             'priority_id'=>[Rule::exists('priorities','id')],
         ]);
-
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
         $MyRequest->update([
             'status_id' => $request->status_id,
             'priority_id' => $request->priority_id,
         ]);
-
-
         return response()->json([
             'message'=>'Request successfully updated',
             'data'=>$MyRequest,
