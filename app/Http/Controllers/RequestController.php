@@ -89,8 +89,8 @@ class RequestController extends Controller
     {
         $MyRequest = MyRequest::findOrFail($id);
         $validator = Validator::make($request->all(), [
-            'status_id'=>[Rule::exists('request_statuses','id')],
-            'priority_id'=>[Rule::exists('priorities','id')],
+            'status_id'=>['sometimes',Rule::exists('request_statuses','id')],
+            'priority_id'=>['sometimes',Rule::exists('priorities','id')],
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
