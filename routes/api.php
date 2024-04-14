@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     PriorityController,
     CategoryController,
     AuthController,
+    UserTypeController,
 };
 
 /*
@@ -39,6 +40,7 @@ Route::apiResource('RequestStatus',RequestStatusController::class);
 Route::apiResource('Priority',PriorityController::class);
 Route::apiResource('Category',CategoryController::class);
 Route::apiResource('Tracking',TrackingController::class);
+Route::apiResource('UserType',UserTypeController::class);
 Route::post('register',[AuthController::class,'register']);
 Route::post('login',[AuthController::class,'login'])->middleware('guest:sanctum');
 Route::post('logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
