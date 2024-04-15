@@ -17,7 +17,6 @@ class AuthController extends Controller
     {
         $validator=Validator::make($request->all(),[
             'name' => ['required','max:100','string','min:2'],
-            'email' => ['required','email',Rule::unique('users')],
             'password'=>['required','min:6','confirmed'],
             'username'=>['required','min:6','max:25',Rule::unique('users')],
             'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:9'],
@@ -40,7 +39,6 @@ class AuthController extends Controller
             'name'=>$request->name,
             'password'=>$request->password,
             'username'=>$request->username,
-            'email'=>$request->email,
             'phone'=>$request->phone,
             'user_type_id'=>$request->user_type_id,
             'image'=>$image,
