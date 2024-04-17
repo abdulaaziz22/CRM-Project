@@ -66,18 +66,27 @@ class RequestController extends Controller
      */
     public function show($request)
     {
-        $MyRequest = MyRequest::with(['college', 'RequestStatus', 'Category', 'Priority', 'filePaths'])
+        $MyRequest = MyRequest::with(['College', 'RequestStatus', 'Category', 'Priority', 'FilePaths','User','Room'])
                  ->findOrFail($request);
         $data = [
-            'id'=>$MyRequest->id,
-            'title'=>$MyRequest->title,
-            'description'=>$MyRequest->description,
-            'close_at'=>$MyRequest->close_at,
-            'College' => $MyRequest->college,
-            'Priority' => $MyRequest->priority,
-            'Status' => $MyRequest->RequestStatus,
-            'Category' => $MyRequest->Category,
-            'filePaths'=>$MyRequest->filePaths,
+            'id' => $MyRequest->id,
+            'title' => $MyRequest->title,
+            'description' => $MyRequest->description,
+            'close_at' => $MyRequest->close_at,
+            'created_at' => $MyRequest->created_at,
+            'updated_at' => $MyRequest->updated_at,
+            'college' => $MyRequest->college->name,
+            'priority' => $MyRequest->priority->name ?? null,
+            'status' => $MyRequest->RequestStatus->status,
+            'category' => $MyRequest->Category->name,
+            'room' => $MyRequest->Room->name,
+            'room_type' => $MyRequest->room->RoomType->name,
+            'building' => $MyRequest->room->building->name,
+            'user' => $MyRequest->User->name,
+            'user_phone' => $MyRequest->User->phone,
+            'user_image' => $MyRequest->User->image,
+            'user_type' => $MyRequest->User->Type->type,
+            'filePaths' => $MyRequest->filePaths,
         ];
         return response()->json(['data'=>$data], 200);
     }
