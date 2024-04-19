@@ -46,11 +46,11 @@ class RequestController extends Controller
             'description'=>$request->description,
             'close_at'=>null,
             'room_id'=>$request->room_id,
-            'status_id'=>'1',
+            'status_id'=>1,
             'priority_id'=>null,
             'category_id'=>$request->category_id,
             'college_id'=>$request->college_id,
-            'user_id'=>'1',
+            'user_id'=>auth()->user()->id,
         ]);
         if(!empty($request->file_path)){
             FilePathController::store($request,$MyRequest->id,$tracking_id=null);
