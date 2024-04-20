@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trackings', function (Blueprint $table) {
             $table->id();
-            $table->date('enddate');
+            $table->date('enddate')->nullable();
             $table->string('details');
             $table->string('subject');
             $table->unsignedBigInteger('request_id');
