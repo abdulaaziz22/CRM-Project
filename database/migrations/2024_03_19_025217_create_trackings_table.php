@@ -18,13 +18,17 @@ return new class extends Migration
             $table->string('details');
             $table->string('subject');
             $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('from_user_id');
+            $table->unsignedBigInteger('to_user_id');
+
+            $table->foreign('from_user_id')->references('id')
+            ->on('users')->onUpdate('cascade')->onDelete('set null');
+
+            $table->foreign('to_user_id')->references('id')
+            ->on('users')->onUpdate('cascade')->onDelete('set null');
 
             $table->foreign('request_id')->references('id')
             ->on('requests')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->foreign('user_id')->references('id')
-            ->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -2,18 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Request;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Request as MyRequest;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tracking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['startdate' , 'enddate' , 'details' , 'subject'];
+    protected $fillable = ['startdate' , 'enddate' , 'details' , 'subject','request_id','from_user_id','to_user_id'];
 
     public function Request()
     {
-        return $this->belongsTo(MyRequest::class,'category_id','id');
+        return $this->belongsTo(Request::class,'request_id','id');
+    }
+    public function from_user()
+    {
+        return $this->belongsTo(User::class,'from_user_id','id');
+    }
+    public function to_user()
+    {
+        return $this->belongsTo(User::class,'to_user_id','id');
     }
 }
