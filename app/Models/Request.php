@@ -10,6 +10,7 @@ use App\Models\Priority;
 use App\Models\Category;
 use App\Models\Tracking;
 use App\Models\College;
+use App\Models\User;
 
 
 
@@ -58,6 +59,11 @@ class Request extends Model
     public function Category()
     {
         return $this->belongsTo(Category::class,'category_id','id');
+    }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
     }
     
     public function College()
