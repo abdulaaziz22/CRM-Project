@@ -12,7 +12,8 @@ class UserTypeController extends Controller
      */
     public function index()
     {
-        //
+        $Types=UserType::dynamicPaginate();
+        return response()->json($Types, 200);
     }
 
     /**

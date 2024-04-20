@@ -19,7 +19,6 @@ class Request extends Model
     use HasFactory ,FilterQueryString;
 
     protected $fillable = [
-        'date',
         'title',
         'description',
         'close_at',
@@ -33,7 +32,7 @@ class Request extends Model
     ];
 
     protected $filters = [
-        'college_id', 
+        'college_id',
         'status_id',
         'priority_id',
         'category_id',
@@ -41,7 +40,7 @@ class Request extends Model
         ];
 
 
-    public function filePaths()
+    public function FilePaths()
     {
         return $this->hasMany(FilePath::class);
     }
@@ -50,7 +49,17 @@ class Request extends Model
     {
         return $this->belongsTo(RequestStatus::class,'status_id','id');
     }
-    
+
+    public function User()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function Room()
+    {
+        return $this->belongsTo(Room::class,'room_id','id');
+    }
+
     public function Priority()
     {
         return $this->belongsTo(Priority::class,'priority_id','id');

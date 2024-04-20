@@ -15,7 +15,6 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name'=>'awad',
-            'email'=>'awad3317@icloud.com',
             'password'=>'12121212',
             'user_type_id'=>1,
             'username'=>'awad1234',

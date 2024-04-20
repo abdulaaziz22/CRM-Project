@@ -20,7 +20,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
         'username',
         'phone',
@@ -36,6 +35,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at'
     ];
 
     /**
@@ -51,5 +51,10 @@ class User extends Authenticatable
     public function Request()
     {
         return $this->hasMany(MyRequest::class);
+    }
+
+    public function Type()
+    {
+        return $this->belongsTo(UserType::class,'user_type_id','id');
     }
 }

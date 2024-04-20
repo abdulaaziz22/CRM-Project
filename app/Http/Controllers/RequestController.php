@@ -40,7 +40,7 @@ class RequestController extends Controller
             'category_id'=>['required',Rule::exists('categories','id')],
             'college_id'=>['required',Rule::exists('colleges','id')],
             'file_path' => ['nullable'],
-            'file_path.*' =>['required','file'],
+            'file_path.*' =>['file'],
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -50,11 +50,11 @@ class RequestController extends Controller
             'description'=>$request->description,
             'close_at'=>null,
             'room_id'=>$request->room_id,
-            'status_id'=>'1',
+            'status_id'=>1,
             'priority_id'=>null,
             'category_id'=>$request->category_id,
             'college_id'=>$request->college_id,
-            'user_id'=>'1',
+            'user_id'=>auth()->user()->id,
         ]);
         if(!empty($request->file_path)){
             FilePathController::store($request,$MyRequest->id,$tracking_id=null);
@@ -70,12 +70,29 @@ class RequestController extends Controller
      */
     public function show($request)
     {
-        $MyRequest = MyRequest::where('id', '=', $request)->first();
-        $data = MyRequest::with('college','RequestStatus' , 'Category')
-            ->where('id', $request)
-            ->with('Priority')
-            ->first();
-        return response()->json($data, 200);
+        $MyRequest = MyRequest::with(['College', 'RequestStatus', 'Category', 'Priority', 'FilePaths','User','Room'])
+                 ->findOrFail($request);
+        $data = [
+            'id' => $MyRequest->id,
+            'title' => $MyRequest->title,
+            'description' => $MyRequest->description,
+            'close_at' => $MyRequest->close_at,
+            'created_at' => $MyRequest->created_at,
+            'updated_at' => $MyRequest->updated_at,
+            'college' => $MyRequest->college->name,
+            'priority' => $MyRequest->priority->name ?? null,
+            'status' => $MyRequest->RequestStatus->status,
+            'category' => $MyRequest->Category->name,
+            'room' => $MyRequest->Room->name,
+            'room_type' => $MyRequest->room->RoomType->name,
+            'building' => $MyRequest->room->building->name,
+            'user' => $MyRequest->User->name,
+            'user_phone' => $MyRequest->User->phone,
+            'user_image' => $MyRequest->User->image,
+            'user_type' => $MyRequest->User->Type->type,
+            'filePaths' => $MyRequest->filePaths,
+        ];
+        return response()->json(['data'=>$data], 200);
     }
 
     /**
@@ -83,29 +100,24 @@ class RequestController extends Controller
      */
     public function update(Request $request , $id)
     {
-        $MyRequest = MyRequest::where('id', '=', $id)->first();
-
+        $MyRequest = MyRequest::findOrFail($id);
         $validator = Validator::make($request->all(), [
-            'status_id'=>[Rule::exists('request_statuses','id')],
-            'priority_id'=>[Rule::exists('priorities','id')],
+            'status_id'=>['sometimes',Rule::exists('request_statuses','id')],
+            'priority_id'=>['sometimes',Rule::exists('priorities','id')],
         ]);
-
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
         $MyRequest->update([
             'status_id' => $request->status_id,
             'priority_id' => $request->priority_id,
         ]);
-
-
         return response()->json([
             'message'=>'Request successfully updated',
             'data'=>$MyRequest,
             ], 200);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
