@@ -24,7 +24,26 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $MyRequest = MyRequest::filter()->with(['Priority:id,name', 'RequestStatus:id,status', 'Category:id,name' , 'College:id,name', 'User:id,name', 'Room:id,name'])
+        $MyRequest = MyRequest::filter()
+        ->join('categories', 'categories.id', '=', 'requests.category_id')
+               ->join('colleges', 'colleges.id', '=', 'requests.college_id')
+               ->join('request_statuses', 'request_statuses.id', '=', 'requests.status_id')
+               ->leftJoin('users', function ($join) {
+                   $join->on('users.id', '=', 'requests.user_id');
+               })
+               ->join('rooms', 'rooms.id', '=', 'requests.room_id')
+            //    ->join('priorities', 'priorities.id', '=', 'requests.priority_id')
+               ->select([
+                'requests.id',
+                'requests.title',
+                'requests.description',
+                'requests.close_at',
+                'categories.name as category_name',
+                'colleges.name as college_name',
+                'request_statuses.status as status_name',
+                'users.name as user_name' ,
+                'rooms.name as room_name'
+            ])
         ->dynamicPaginate();
         return response()->json($MyRequest, 200);
     }
