@@ -24,7 +24,8 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $MyRequest = MyRequest::filter()->with(['Priority', 'RequestStatus', 'Category' , 'College', 'User'])->dynamicPaginate();
+        $MyRequest = MyRequest::filter()->with(['Priority:id,name', 'RequestStatus:id,status', 'Category:id,name' , 'College:id,name', 'User:id,name', 'Room:id,name'])
+        ->dynamicPaginate();
         return response()->json($MyRequest, 200);
     }
 
