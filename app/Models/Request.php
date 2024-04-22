@@ -79,4 +79,15 @@ class Request extends Model
     {
         return $this->hasMany(Tracking::class);
     }
+
+    protected $hidden = [
+        'user_id',
+        'college_id',
+        'status_id',
+        'category_id',
+        'room_id',
+        'priority_id',
+        'description' ,
+        'close_at'
+    ];
 }
