@@ -25,10 +25,24 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $MyRequest = MyRequest::filter()
-        ->with('Priority:id,name','college:id,name' , 'RequestStatus:id,status' , 'Category:id,name' , 'User:id,name')
-        ->dynamicPaginate();
-        return response()->json($MyRequest, 200);
+        $requests = MyRequest::with(['College', 'RequestStatus', 'Category', 'Priority','User', 'Room'])
+        ->get()
+        ->map(function ($request) {
+        return [
+            'id' => $request->id,
+            'title' => $request->title,
+            'created_at' => $request->created_at,
+            'updated_at' => $request->updated_at,
+            'college' => $request->college->name,
+            'priority' => $request->priority->name ?? null,
+            'status' => $request->requestStatus->status,
+            'category' => $request->category->name,
+            'room' => $request->room->name,
+            'user' => $request->user->name,
+        ];
+    });
+
+return response()->json(['data' => $requests], 200);
 
     }
 
