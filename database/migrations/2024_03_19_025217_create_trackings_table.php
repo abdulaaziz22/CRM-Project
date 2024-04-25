@@ -21,10 +21,10 @@ return new class extends Migration
             $table->unsignedBigInteger('to_user_id');
 
             $table->foreign('from_user_id')->references('id')
-            ->on('users')->onUpdate('cascade')->onDelete('set null');
+            ->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('to_user_id')->references('id')
-            ->on('users')->onUpdate('cascade')->onDelete('set null');
+            ->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('request_id')->references('id')
             ->on('requests')->onUpdate('cascade')->onDelete('cascade');
