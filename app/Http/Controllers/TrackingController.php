@@ -15,7 +15,9 @@ class TrackingController extends Controller
      */
     public function index()
     {
-        //
+        $Tracking=Tracking::where('to_user_id','=',auth()->user()->id)->with(['Request','from_user'])->get();
+        return response()->json(['data' => $Tracking], 200);
+
     }
 
     /**
