@@ -19,6 +19,7 @@ class AuthController extends Controller
         return response()->json(['data' => $User], 200);
 
     }
+
     public function register(Request $request)
     {
         $validator=Validator::make($request->all(),[
@@ -57,30 +58,31 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-{
-  $validator = Validator::make($request->all(), [
-    'username' => 'required',
-    'password' => 'required',
-  ]);
+    {
+        $validator = Validator::make($request->all(), [
+        'username' => 'required',
+        'password' => 'required',
+        ]);
 
-  if ($validator->fails()) {
-    return response()->json($validator->errors(), 422);
-  }
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-  $user = User::with('Type')->where('username', $request->username)->first();
+        $user = User::with('Type')->where('username', $request->username)->first();
 
-  if ($user && Hash::check($request->password, $user->password)) {
-    $token = $user->createToken('authToken')->plainTextToken;
-    return response()->json([
-      'access_token' => $token,
-      'user' => $user,
-    ]);
-  } else {
-    return response()->json([
-      'message' => $user ? 'Password mismatch' : 'User does not exist'
-    ], 422);
-  }
-}
+        if ($user && Hash::check($request->password, $user->password)) {
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json([
+                'access_token' => $token,
+                'user' => $user,
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => $user ? 'Password mismatch' : 'User does not exist'
+            ], 422);
+        }
+    }
 
     public function logout(Request $request)
     {
