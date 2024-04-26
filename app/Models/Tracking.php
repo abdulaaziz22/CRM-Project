@@ -11,7 +11,7 @@ class Tracking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['startdate' , 'enddate' , 'details' , 'subject','request_id','from_user_id','to_user_id'];
+    protected $fillable = ['enddate' , 'details' , 'subject','request_id','from_user_id','to_user_id'];
 
     public function Request()
     {

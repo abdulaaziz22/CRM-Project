@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\validator;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        $User=User::get();
+        return response()->json(['data' => $User], 200);
+
+    }
     public function register(Request $request)
     {
         $validator=Validator::make($request->all(),[
@@ -81,4 +87,6 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+
 }

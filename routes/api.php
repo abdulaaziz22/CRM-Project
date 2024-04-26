@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('Tracking',TrackingController::class);
     Route::apiResource('UserType',UserTypeController::class);
     Route::post('logout',[AuthController::class,'logout']);
+    Route::get('user',[AuthController::class,'index']);
 });
 
 Route::group(['middleware' => ['guest:sanctum']], function () {
