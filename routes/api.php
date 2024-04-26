@@ -14,6 +14,7 @@ use App\Http\Controllers\{
     CategoryController,
     AuthController,
     UserTypeController,
+    TrackingController
 };
 
 /*
