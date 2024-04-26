@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Tracking;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\validator;
+use App\Notifications\Trackingnotification;
 use App\Http\Controllers\FilePathController;
+use Illuminate\Support\Facades\Notification;
 
 class TrackingController extends Controller
 {
@@ -53,6 +56,8 @@ class TrackingController extends Controller
         if(!empty($request->file_path)){
             FilePathController::store($request,$MyRequest=null,$Tracking->id);
         }
+        $user=User::find($Tracking->to_user_id);
+        Notification::send($user, new Trackingnotification($Tracking->id,$Tracking->subject,auth()->user()->name));
         return response()->json([
             'message'=>'Tracking successfully stored',
             'data'=>$Tracking,
