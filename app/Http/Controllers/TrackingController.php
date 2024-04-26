@@ -30,7 +30,7 @@ class TrackingController extends Controller
             'details'=>['required','min:2'],
             'request_id'=>['required',Rule::exists('requests','id')],
             'to_user_id'=>['required',Rule::exists('users','id'),'not_in:' . auth()->user()->id],
-            'Tracking_id'=>['sometimes',Rule::exists('trackings','id')],
+            'Tracking_id'=>['nullable','sometimes',Rule::exists('trackings','id')],
             'file_path' => ['nullable'],
             'file_path.*' =>['file'],
         ]);

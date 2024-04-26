@@ -28,9 +28,9 @@ use App\Http\Controllers\{
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('College',CollegeController::class);
