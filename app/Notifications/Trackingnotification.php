@@ -63,6 +63,7 @@ class Trackingnotification extends Notification
             'id'=>$this->id,
             'subject'=>$this->subject,
             'user'=>$this->from_user,
+            'date'=>now(),
         ];
     }
 
