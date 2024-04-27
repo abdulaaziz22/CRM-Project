@@ -10,13 +10,14 @@ class NotificationController extends Controller
 {
     public function UnreadNotifications()
     {
-        $UnreadNotifications = Auth::user()->unreadNotifications()->count();
-        return response()->json(['Unread_Notifications' => $UnreadNotifications], 200);
+        $UnreadNotifications = Auth::user()->unreadNotifications()->get();
+        $count = Auth::user()->unreadNotifications()->count();
+        return response()->json(['Unread_Notifications' => $UnreadNotifications , 'Number' => $count], 200);
     }
 
-    public function ReadNotifications()
+    public function AllNotifications()
     {
-        $ReadNotifications = Auth::user()->readNotifications()->count();
-        return response()->json(['Read_Notifications' => $ReadNotifications,], 200);
+        $ReadNotifications = Auth::user()->notifications;
+        return response()->json(['All_Notifications' => $ReadNotifications,], 200);
     }
 }
