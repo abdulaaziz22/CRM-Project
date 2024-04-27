@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\validator;
 use App\Notifications\Trackingnotification;
 use App\Http\Controllers\FilePathController;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth;
+ 
 
 class TrackingController extends Controller
 {
@@ -69,7 +71,7 @@ class TrackingController extends Controller
      */
     public function show(Tracking $tracking)
     {
-        //
+        // Auth::user()->unreadNotifications->markAsRead();
     }
 
     /**
