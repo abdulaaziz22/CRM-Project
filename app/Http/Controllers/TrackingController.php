@@ -18,9 +18,9 @@ class TrackingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() 
     {
-        $Tracking=Tracking::with(['Request','from_user','to_user','FilePaths'])->dynamicPaginate();
+        $Tracking=Tracking::with(['Request','from_user','to_user','FilePaths'])->filter()->dynamicPaginate();
         return response()->json(['data' => $Tracking], 200);
 
     }
