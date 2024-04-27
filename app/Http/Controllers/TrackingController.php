@@ -11,7 +11,7 @@ use App\Notifications\Trackingnotification;
 use App\Http\Controllers\FilePathController;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
- 
+
 
 class TrackingController extends Controller
 {
@@ -20,7 +20,7 @@ class TrackingController extends Controller
      */
     public function index()
     {
-        $Tracking=Tracking::where('to_user_id','=',auth()->user()->id)->with(['Request','from_user'])->get();
+        $Tracking=Tracking::with(['Request','from_user','to_user','FilePaths'])->dynamicPaginate();
         return response()->json(['data' => $Tracking], 200);
 
     }

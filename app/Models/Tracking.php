@@ -13,6 +13,10 @@ class Tracking extends Model
 
     protected $fillable = ['enddate' , 'details' , 'subject','request_id','from_user_id','to_user_id'];
 
+    public function FilePaths()
+    {
+        return $this->hasMany(FilePath::class);
+    }
     public function Request()
     {
         return $this->belongsTo(Request::class,'request_id','id');
