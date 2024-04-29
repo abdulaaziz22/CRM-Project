@@ -33,7 +33,4 @@ class test_websocketevent implements ShouldBroadcast
             new PrivateChannel('testwebsoket'),
         ];
     }
-    public function broadcastAs(){
-        return 'testwebsoket';
-    }
 }
