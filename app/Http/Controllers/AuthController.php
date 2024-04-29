@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Events\test_websocketevent;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +18,6 @@ class AuthController extends Controller
         $User=User::get();
         return response()->json(['data' => $User], 200);
 
-    }
-
-    public function testwebsocket()  {
-        event(new test_websocketevent());
     }
 
     public function register(Request $request)

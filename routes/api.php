@@ -33,7 +33,6 @@ use App\Http\Controllers\{
 //     return $request->user();
 // });
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
-Route::get('testwebsocet',[AuthController::class,'testwebsocket']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('College',CollegeController::class);
     Route::apiResource('Building',BuildingController::class);
