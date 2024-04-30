@@ -17,7 +17,7 @@ class NotificationController extends Controller
 
     public function AllNotifications()
     {
-        $ReadNotifications = Auth::user()->notifications;
-        return response()->json(['All_Notifications' => $ReadNotifications,], 200);
+        $AllNotifications = Auth::user()->notifications;
+        return response()->json(['All_Notifications' => $AllNotifications,], 200);
     }
 }
