@@ -21,7 +21,7 @@ class AuthController extends Controller
 
     }
 
-    public function testwebsocket()  {
+    public function test()  {
         event(new test_websocketevent());
     }
 

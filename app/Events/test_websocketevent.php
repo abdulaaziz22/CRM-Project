@@ -30,7 +30,14 @@ class test_websocketevent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('testwebsoket'),
+            new Channel('testing'),
+        ];
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'data'=>'awad',
         ];
     }
 }
