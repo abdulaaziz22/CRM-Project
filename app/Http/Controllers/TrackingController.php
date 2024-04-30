@@ -21,7 +21,7 @@ class TrackingController extends Controller
     public function index() //https://example.com?sort=created_at,[desc|asc] asc by default
     {
         $Tracking=Tracking::with(['Request','from_user','to_user','FilePaths'])->filter()->dynamicPaginate();
-        return response()->json(['data' => $Tracking], 200);
+        return response()->json(['data' => $Tracking], 200); 
 
     }
 
