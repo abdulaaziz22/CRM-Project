@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class test_websocketevent implements ShouldBroadcast
+class Hello implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -27,10 +27,11 @@ class test_websocketevent implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('testwebsoket'),
-        ];
+        return new Channel('public');
+    }
+    public function broadcastWith()  {
+        return ['welcome'=>'welcome to the club'];
     }
 }
