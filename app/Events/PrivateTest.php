@@ -7,19 +7,20 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class test_websocketevent implements ShouldBroadcast
+class PrivateTest implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
+    public $user;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user=$user;
     }
 
     /**
@@ -30,14 +31,13 @@ class test_websocketevent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('testing'),
+            new PrivateChannel('privat-test-'. $this->user->id),
         ];
     }
-
-    public function broadcastWith(): array
+    public function broadcastWith()
     {
         return [
-            'data'=>'awad',
+            'welcome'=>'welcome to the Private club'
         ];
     }
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use App\Events\Hello;
+use App\Events\PrivateTest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -18,4 +21,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test',[AuthController::class,'test']);
+Route::get('/broadcast', function () {
+    Hello::dispatch();
+    return 'sent';
+});
+
+Route::get('/broadcast-private', function () {
+    $user=User::find(1);
+    PrivateTest::dispatch($user);
+    return 'sent '. $user->name;
+});
+
+
