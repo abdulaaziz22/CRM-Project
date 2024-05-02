@@ -21,10 +21,6 @@ class AuthController extends Controller
 
     }
 
-    public function test()  {
-        event(new test_websocketevent());
-    }
-
     public function register(Request $request)
     {
         $validator=Validator::make($request->all(),[
