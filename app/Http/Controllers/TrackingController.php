@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tracking;
+use App\Events\PrivateTest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\validator;
 use App\Notifications\Trackingnotification;
 use App\Http\Controllers\FilePathController;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Auth;
 
 
 class TrackingController extends Controller
@@ -21,7 +22,7 @@ class TrackingController extends Controller
     public function index() //https://example.com?sort=created_at,[desc|asc] asc by default
     {
         $Tracking=Tracking::with(['Request','from_user','to_user','FilePaths'])->filter()->dynamicPaginate();
-        return response()->json(['data' => $Tracking], 200); 
+        return response()->json(['data' => $Tracking], 200);
 
     }
 
@@ -60,6 +61,7 @@ class TrackingController extends Controller
         }
         $user=User::find($Tracking->to_user_id);
         Notification::send($user, new Trackingnotification($Tracking->id,$Tracking->subject,auth()->user()->name));
+        PrivateTest::dispatch($Tracking->id,$Tracking->subject,$Tracking->to_user_id,auth()->user()->name);
         return response()->json([
             'message'=>'Tracking successfully stored',
             'data'=>$Tracking,

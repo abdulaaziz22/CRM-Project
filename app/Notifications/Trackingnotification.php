@@ -32,7 +32,7 @@ class Trackingnotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database','broadcast'];
+        return ['database'];
     }
 
     /**
@@ -66,16 +66,6 @@ class Trackingnotification extends Notification
             'user'=>$this->from_user,
             'date'=>now(),
         ];
-    }
-
-    public function toBroadcast(object $notifiable)
-    {
-        return new BroadcastMessage( [
-            'id'=>$this->id,
-            'subject'=>$this->subject,
-            'user'=>$this->from_user,
-            'date'=>now(),
-        ]);
     }
 
 }
