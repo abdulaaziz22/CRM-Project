@@ -58,24 +58,24 @@ class Trackingnotification extends Notification
         ];
     }
 
-    public function toDatabase(object $notifiable)
+    public function toDatabase(object $notifiable): array
     {
-        return new BroadcastMessage( [
-            'id'=>$this->id,
-            'subject'=>$this->subject,
-            'user'=>$this->from_user,
-            'date'=>now(),
-        ]);
-    }
-
-    public function toBroadcast(object $notifiable): array
-    {
-        return [
+        return  [
             'id'=>$this->id,
             'subject'=>$this->subject,
             'user'=>$this->from_user,
             'date'=>now(),
         ];
+    }
+
+    public function toBroadcast(object $notifiable)
+    {
+        return new BroadcastMessage([
+            'id'=>$this->id,
+            'subject'=>$this->subject,
+            'user'=>$this->from_user,
+            'date'=>now(),
+        ]);
     }
 
 }
