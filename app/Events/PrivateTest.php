@@ -14,20 +14,14 @@ use Illuminate\Queue\SerializesModels;
 class PrivateTest implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    // public $user;
-    public $id;
-    public $subject;
-    public $from_user;
-    public $to_user_id;
+    public $user;
+
     /**
      * Create a new event instance.
      */
-    public function __construct($Tracking_id,$Tracking_subject,$to_user_id,$from_user)
+    public function __construct($user)
     {
-        $this->id=$Tracking_id;
-        $this->subject=$Tracking_subject;
-        $this->from_user=$from_user;
-        $this->to_user_id=$to_user_id;
+        $this->user=$user;
     }
 
     /**
@@ -38,16 +32,13 @@ class PrivateTest implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('privat-test-'.$this->to_user_id),
+            new PrivateChannel('privat-test-'.$this->user->id),
         ];
     }
     public function broadcastWith()
     {
         return [
-            'id'=>$this->id,
-            'subject'=>$this->subject,
-            'user'=>$this->from_user,
-            'date'=>now(),
+            'welcome'=>'welcome to the private club'
         ];
     }
 }

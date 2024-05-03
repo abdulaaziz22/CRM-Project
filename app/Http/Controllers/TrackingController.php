@@ -61,7 +61,7 @@ class TrackingController extends Controller
         }
         $user=User::find($Tracking->to_user_id);
         Notification::send($user, new Trackingnotification($Tracking->id,$Tracking->subject,auth()->user()->name));
-        PrivateTest::dispatch($Tracking->id,$Tracking->subject,$Tracking->to_user_id,auth()->user()->name);
+        // PrivateTest::dispatch($Tracking->id,$Tracking->subject,$Tracking->to_user_id,auth()->user()->name);
         return response()->json([
             'message'=>'Tracking successfully stored',
             'data'=>$Tracking,
