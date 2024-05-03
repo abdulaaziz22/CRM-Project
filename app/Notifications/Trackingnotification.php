@@ -63,7 +63,7 @@ class Trackingnotification extends Notification
         return  [
             'id'=>$this->id,
             'subject'=>$this->subject,
-            'user'=>$this->from_user,
+            'from_user'=>$this->from_user,
             'date'=>now(),
         ];
     }
@@ -73,8 +73,7 @@ class Trackingnotification extends Notification
         return new BroadcastMessage([
             'id'=>$this->id,
             'subject'=>$this->subject,
-            'user'=>$this->from_user,
-            'date'=>now(),
+            'from_user'=>$this->from_user,
         ]);
     }
 
