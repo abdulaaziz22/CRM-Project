@@ -60,8 +60,7 @@ class TrackingController extends Controller
             FilePathController::store($request,$MyRequest=null,$Tracking->id);
         }
         $user=User::find($Tracking->to_user_id);
-        Notification::send($user, new Trackingnotification($Tracking->id,$Tracking->subject,auth()->user()->name));
-        // PrivateTest::dispatch($Tracking->id,$Tracking->subject,$Tracking->to_user_id,auth()->user()->name);
+        Notification::send($user, new Trackingnotification($Tracking->id,$Tracking->subject,auth()->user()->name,auth()->user()->image));
         return response()->json([
             'message'=>'Tracking successfully stored',
             'data'=>$Tracking,

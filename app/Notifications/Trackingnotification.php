@@ -12,17 +12,19 @@ class Trackingnotification extends Notification
 {
     use Queueable;
 
-    public $id;
-    public $subject;
-    public $from_user;
+    protected $id;
+    protected $subject;
+    protected $from_user;
+    protected $user_image;
     /**
      * Create a new notification instance.
      */
-    public function __construct($Tracking_id,$Tracking_subject,$from_user)
+    public function __construct($Tracking_id,$Tracking_subject,$from_user,$user_image)
     {
         $this->id=$Tracking_id;
         $this->subject=$Tracking_subject;
         $this->from_user=$from_user;
+        $this->$user_image=$user_image;
     }
 
     /**
@@ -64,6 +66,7 @@ class Trackingnotification extends Notification
             'id'=>$this->id,
             'subject'=>$this->subject,
             'from_user'=>$this->from_user,
+            'user_image'=>$this->$user_image,
             'date'=>now(),
         ];
     }
@@ -74,6 +77,7 @@ class Trackingnotification extends Notification
             'id'=>$this->id,
             'subject'=>$this->subject,
             'from_user'=>$this->from_user,
+            'user_image'=>$this->$user_image,
         ]);
     }
 
