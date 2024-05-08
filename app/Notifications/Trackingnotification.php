@@ -77,7 +77,7 @@ class Trackingnotification extends Notification
             'id'=>$this->id,
             'subject'=>$this->subject,
             'from_user'=>$this->from_user,
-            'user_image'=>$this->$user_image,
+            'user_image'=>$this->user_image,
         ]);
     }
 
