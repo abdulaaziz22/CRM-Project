@@ -58,4 +58,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserType::class,'user_type_id','id');
     }
+
+    public function permission()
+    {
+        return $this->belongsToMany(Book::class,'permission_users','permission_id','user_id');       
+
+    }
 }

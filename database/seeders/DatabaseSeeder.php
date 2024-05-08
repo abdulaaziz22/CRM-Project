@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             RequestStatusSeeder::class,
             UserTypeSeeder::class,
             UserSeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }
