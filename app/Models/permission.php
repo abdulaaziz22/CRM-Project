@@ -13,4 +13,9 @@ class permission extends Model
     {
         return $this->belongsToMany(Book::class,'permission_users','permission_id','user_id');       
     }
+
+    public function Type()
+    {
+        return $this->belongsToMany(Book::class,'user_type_permissions','permission_id','user_type_id');       
+    }
 }

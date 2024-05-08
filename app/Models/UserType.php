@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserType extends Model
 {
     use HasFactory;
+    
+    public function permission()
+    {
+        return $this->belongsToMany(Book::class,'user_type_permissions','permission_id','user_type_id');       
+
+    }
 }
