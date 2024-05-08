@@ -12,7 +12,7 @@ class Trackingnotification extends Notification
 {
     use Queueable;
 
-    protected $id;
+    public $id;
     protected $subject;
     protected $from_user;
     protected $user_image;

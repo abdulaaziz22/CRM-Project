@@ -70,9 +70,22 @@ class TrackingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tracking $tracking)
+    public function show($tracking)
     {
-        // Auth::user()->unreadNotifications->markAsRead();
+        $Tracking=Tracking::with(['from_user','to_user','FilePaths'])->findOrfail($tracking);
+        $data = [
+            'id' => $Tracking->id,
+            'enddate' => $Tracking->enddate,
+            'details' => $Tracking->details,
+            'subject' => $Tracking->subject,
+            'created_at' => $Tracking->created_at,
+            'updated_at' => $Tracking->updated_at,
+            'request_id' => $Tracking->request_id,
+            'from_user' => $Tracking->from_user->name,
+            'to_user' => $Tracking->to_user->name,
+            'filePaths' => $Tracking->filePaths,
+        ];
+        return response()->json($data, 200);
     }
 
     /**
