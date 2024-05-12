@@ -15,7 +15,8 @@ use App\Http\Controllers\{
     AuthController,
     UserTypeController,
     TrackingController,
-    NotificationController
+    NotificationController,
+    PermissionController
 };
 
 /*
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('Category',CategoryController::class);
     Route::apiResource('Tracking',TrackingController::class);
     Route::apiResource('UserType',UserTypeController::class);
+    Route::apiResource('Permission',PermissionController::class);
     Route::post('logout',[AuthController::class,'logout']);
     Route::get('user',[AuthController::class,'index']);
     Route::get('Notifications/unread',[NotificationController::class,'UnreadNotifications']);

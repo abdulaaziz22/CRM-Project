@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\validator;
-use Illuminate\Validation\Rule;
+use App\Models\user_type_permission;
 
-class UserTypeController extends Controller
+class user_type_permissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $Types=UserType::dynamicPaginate();
-        return response()->json($Types, 200);
+        //
     }
 
     /**
@@ -24,13 +21,15 @@ class UserTypeController extends Controller
     public function store(Request $request)
     {
         $validator = validator::make($request->all(),[
-            'type'=>['required','min:2',Rule::unique('user_types')],
+            'user_type_id' => ['required',Rule::exists('user_types', 'id')],
+            'permission_id' => ['required',Rule::exists('permissions', 'id')],
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $data = UserType::Create([
-            'type' => $request->type,
+        $data = user_type_permission::firstOrCreate([
+            'user_type_id' => $request->user_type_id,
+            'permission_id' => $request->permission_id,
         ]);
         return response()->json($data, 200);
     }
@@ -38,7 +37,7 @@ class UserTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserType $userType)
+    public function show(string $id)
     {
         //
     }
@@ -46,7 +45,7 @@ class UserTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserType $userType)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -54,7 +53,7 @@ class UserTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserType $userType)
+    public function destroy(string $id)
     {
         //
     }
