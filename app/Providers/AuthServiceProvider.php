@@ -5,7 +5,9 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Request as MyRequest;
+use App\Models\Tracking;
 use App\Policies\RequestPolicy;
+use App\Policies\TrackingPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         MyRequest::class => RequestPolicy::class,
+        Tracking::class => TrackingPolicy::class,
         //
     ];
 

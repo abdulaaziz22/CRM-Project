@@ -31,6 +31,7 @@ class TrackingController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Tracking::class);
         $validator = validator::make($request->all(),[
             'subject'=>['required','min:2'],
             'details'=>['required','min:2'],
@@ -72,6 +73,8 @@ class TrackingController extends Controller
      */
     public function show($tracking)
     {
+        $CheckPoliciy = Tracking::findOrFail($tracking);
+        $this->authorize('view', $CheckPoliciy);
         $Tracking=Tracking::with(['from_user','to_user','FilePaths'])->findOrfail($tracking);
         $data = [
             'id' => $Tracking->id,

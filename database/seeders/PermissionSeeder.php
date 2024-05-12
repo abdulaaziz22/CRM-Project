@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
             'update_request' => 'تعديل طلب',
             'show_request' => 'عرض طلب',
             'show_user' => 'عرض مستخدم',
+            'show_tracking' => 'عرض تتبع',
         ];
         foreach ($permissions as $name => $display_name) {
             Permission::create(['name' => $name, 'display_name' => $display_name]);
