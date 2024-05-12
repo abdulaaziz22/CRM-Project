@@ -51,6 +51,7 @@ return response()->json(['data' => $requests], 200);
      */
     public function store(Request $request)
     {
+        $this->authorize('create', MyRequest::class);
         $validator = validator::make($request->all(),[
             'title'=>['required','min:2'],
             'description'=>['required','min:2'],
@@ -88,6 +89,8 @@ return response()->json(['data' => $requests], 200);
      */
     public function show($request)
     {
+        $CheckPoliciy = MyRequest::findOrFail($request);
+        $this->authorize('view', $CheckPoliciy);
         $MyRequest = MyRequest::with(['College', 'RequestStatus', 'Category', 'Priority', 'FilePaths','User','Room'])
                  ->findOrFail($request);
         $data = [
@@ -118,6 +121,8 @@ return response()->json(['data' => $requests], 200);
      */
     public function update(Request $request , $id)
     {
+        $CheckPoliciy = MyRequest::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
         $MyRequest = MyRequest::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'status_id'=>['sometimes',Rule::exists('request_statuses','id')],

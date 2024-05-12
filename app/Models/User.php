@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Request as MyRequest;
+use App\Models\UserType;
+
 
 class User extends Authenticatable
 {
@@ -61,7 +63,12 @@ class User extends Authenticatable
 
     public function permission()
     {
-        return $this->belongsToMany(permission::class,'permission_users','permission_id','user_id');       
+        return $this->belongsToMany(permission::class,'permission_users');
+    }
 
+    public static function hasPermission($permission)
+    {
+        // return UserType::find(auth()->user()->Type->id)->permission;
+        return auth()->user()->Type->permission->contains('name', $permission);
     }
 }
