@@ -47,7 +47,7 @@ class UserController extends Controller
         $User = User::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => ['required','max:100','string','min:2'],
-            'username'=>['required','min:6','max:25'],
+            'username'=>['required','min:6','max:25',Rule::unique('users')->ignore($user->id)],
             'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:9'],
             'user_type_id'=>['required',Rule::exists('user_types','id')],
             'image'=>['required',Rule::when($request->hasFile('image'),[file::types(['jpeg','bmp','png','jpg'])->max(2048)]),Rule::when(is_string($request->image),'string')],
