@@ -39,14 +39,15 @@ class Request extends Model
         'room_id',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime:Y-m-d H:i',
-    ];
+    public function getCreatedAtAttribute($value)
+    {
+    return $this->asDateTime($value)->toDateTimeString();
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+    return $this->asDateTime($value)->toDateTimeString();
+    }
 
     
 
