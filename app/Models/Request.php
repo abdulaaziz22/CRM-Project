@@ -37,8 +37,18 @@ class Request extends Model
         'priority_id',
         'category_id',
         'room_id',
-        ];
+    ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i',
+    ];
+
+    
 
     public function FilePaths()
     {
