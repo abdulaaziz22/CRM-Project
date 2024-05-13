@@ -54,8 +54,10 @@ class UserTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserType $userType)
-    {
-        //
+    public function destroy($id)
+    { 
+        $UserType=UserType::findOrfail($id);
+        $UserType->delete();
+        return response()->json(['message'=>'UserType successfully deleted','data'=>$UserType,], 200);
     }
 }

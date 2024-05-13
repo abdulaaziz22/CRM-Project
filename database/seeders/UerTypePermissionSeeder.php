@@ -13,7 +13,7 @@ class UerTypePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = [1 => [1, 2, 3, 4, 5, 6, 7, 8, 9 , 10]];
+        $permissions = [1 => [1, 2, 3, 4, 5, 6, 7, 8, 9 , 10 , 11 , 12]];
 
         foreach ($permissions as $user_type_id => $permission_ids) {
             foreach ($permission_ids as $permission_id) {

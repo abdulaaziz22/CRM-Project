@@ -19,11 +19,12 @@ class PermissionSeeder extends Seeder
             'create_tracking' => 'انشاء تتبع',
             'delete_request' => 'حدف طلب',
             'delete_tracking' => 'حدف تتبع',
+            'delete_user' => 'حدف مستخدم',
             'update_user' => 'تعديل مستخدم',
             'update_tracking' => 'تعديل تتبع',
             'update_request' => 'تعديل طلب',
             'show_request' => 'عرض طلب',
-            'show_user' => 'عرض مستخدم',
+            'show_users' => 'عرض مستخدم',
             'show_tracking' => 'عرض تتبع',
         ];
         foreach ($permissions as $name => $display_name) {
