@@ -17,7 +17,6 @@ class MarkNotificationAsRead
     public function handle(Request $request, Closure $next): Response
     {  
         $notify_id=$request->query('notify_id');
-        dd($notify_id);
         if($notify_id){
             $notification=Auth::user()->unreadNotifications()->find($notify_id);
             if($notification){
