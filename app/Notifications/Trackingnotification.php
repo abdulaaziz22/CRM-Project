@@ -67,7 +67,7 @@ class Trackingnotification extends Notification
             'subject'=>$this->subject,
             'from_user'=>$this->from_user,
             'user_image'=>$this->user_image,
-            'date'=>now(),
+            'date'=>now()->format('Y-m-d H:i:s'),
         ];
     }
 
