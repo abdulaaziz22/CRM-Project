@@ -37,8 +37,19 @@ class Request extends Model
         'priority_id',
         'category_id',
         'room_id',
-        ];
+    ];
 
+    public function getCreatedAtAttribute($value)
+    {
+    return $this->asDateTime($value)->toDateTimeString();
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+    return $this->asDateTime($value)->toDateTimeString();
+    }
+
+    
 
     public function FilePaths()
     {

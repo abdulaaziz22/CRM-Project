@@ -29,7 +29,7 @@ class AuthController extends Controller
             'username'=>['required','min:6','max:25',Rule::unique('users')],
             'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:9'],
             'user_type_id'=>['required',Rule::exists('user_types','id')],
-            'image'=>[File::image()]
+            'image'=>['nullable',File::image()]
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
