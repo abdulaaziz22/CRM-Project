@@ -7,9 +7,11 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\Request as MyRequest;
 use App\Models\Tracking;
 use App\Models\User;
+use App\Models\UserType;
 use App\Policies\RequestPolicy;
 use App\Policies\TrackingPolicy;
 use App\Policies\UserPolicy;
+use App\Policies\UserTypePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         MyRequest::class => RequestPolicy::class,
         Tracking::class => TrackingPolicy::class,
         User::class => UserPolicy::class,
+        UserType::class => UserTypePolicy::class,
         //
     ];
 

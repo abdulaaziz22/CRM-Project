@@ -14,6 +14,7 @@ class UserTypeController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', UserType::class);
         $Types=UserType::dynamicPaginate();
         return response()->json($Types, 200);
     }
@@ -23,6 +24,7 @@ class UserTypeController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', UserType::class);
         $validator = validator::make($request->all(),[
             'type'=>['required','min:2',Rule::unique('user_types')],
         ]);
@@ -46,9 +48,24 @@ class UserTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserType $userType)
+    public function update(Request $request, $id)
     {
-        //
+        $CheckPoliciy = UserType::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
+        $UserType = UserType::findOrFail($id);
+        $validator=Validator::make($request->all(),[
+            'type'=>['required','min:2',Rule::unique('user_types')->ignore($UserType->id)],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $UserType->update([
+            'type'=>$request->type,
+        ]);
+        return response()->json([
+            'message'=>'UserType successfully updated',
+            'data'=>$UserType,
+        ], 200);
     }
 
     /**
@@ -56,6 +73,8 @@ class UserTypeController extends Controller
      */
     public function destroy($id)
     { 
+        $CheckPoliciy = UserType::findOrFail($id);
+        $this->authorize('delete',$CheckPoliciy);
         $UserType=UserType::findOrfail($id);
         $UserType->delete();
         return response()->json(['message'=>'UserType successfully deleted','data'=>$UserType,], 200);
