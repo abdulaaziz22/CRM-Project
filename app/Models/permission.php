@@ -11,11 +11,11 @@ class permission extends Model
 
     public function User()
     {
-        return $this->belongsToMany(User::class,'permission_users','permission_id','user_id');       
+        return $this->belongsToMany(User::class,'permission_users');       
     }
 
     public function Type()
     {
-        return $this->belongsToMany(UserType::class,'user_type_permissions','permission_id','user_type_id');       
+        return $this->belongsToMany(UserType::class,'user_type_permissions');       
     }
 }

@@ -25,15 +25,22 @@ class UserTypeController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', UserType::class);
-        $validator = validator::make($request->all(),[
-            'type'=>['required','min:2',Rule::unique('user_types')],
+
+        $validator = Validator::make($request->all(), [
+            'type' => ['required', 'min:2', Rule::unique('user_types')],
+            'permissions' => ['required', 'array']
         ]);
+        
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $data = UserType::Create([
+        
+        $data = UserType::create([
             'type' => $request->type,
         ]);
+        
+        $data->permission()->attach($request->permissions);
+        
         return response()->json($data, 200);
     }
 

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class user_type_permission extends Model
 {
     use HasFactory;
-    protected $fillable = ['permission_id','user_type_id'];
+    protected $fillable = ['user_type_id' , 'permission_id'];
 }
