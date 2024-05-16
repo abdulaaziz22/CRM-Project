@@ -15,8 +15,21 @@ class UserTypeController extends Controller
     public function index()
     {
         $this->authorize('viewAny', UserType::class);
-        $Types=UserType::dynamicPaginate();
-        return response()->json($Types, 200);
+        $Types = UserType::with('permission')->get();
+        $data = $Types->map(function ($userType) {
+            return [
+                'id' => $userType->id,
+                'type' => $userType->type,
+                'created_at' => $userType->created_at,
+                'updated_at' => $userType->updated_at,
+                'permissions' => $userType->permission->map(function ($permission) {
+                return $permission->display_name;
+                }),
+            ];
+        });
+        
+        return response()->json($data, 200);
+        
     }
 
     /**
@@ -69,6 +82,8 @@ class UserTypeController extends Controller
         $UserType->update([
             'type'=>$request->type,
         ]);
+
+        $UserType->permission()->sync($request->permissions);
         return response()->json([
             'message'=>'UserType successfully updated',
             'data'=>$UserType,
