@@ -73,10 +73,11 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->password, $user->password)) {
             $token = $user->createToken('authToken')->plainTextToken;
-            $user->type->permission;
+            $awad=$user->type->permission->pluck('name');
             return response()->json([
                 'access_token' => $token,
                 'user' => $user,
+                'awad'=>$awad
             ]);
         }
         else {
