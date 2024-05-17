@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class permission extends Model
 {
     use HasFactory;
+    protected $hidden = ['pivot','updated_at','created_at'];
 
     public function User()
     {
