@@ -10,6 +10,7 @@ class UserType extends Model
     use HasFactory;
 
     protected $fillable = ['type'];
+    protected $hidden = ['created_at','updated_at'] ;
     
     public function permission()
     {
