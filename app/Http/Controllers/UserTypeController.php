@@ -60,9 +60,15 @@ class UserTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserType $userType)
+    public function show($id)
     {
-        //
+        $Type=UserType::with(['permission'])->findOrfail($id);
+        $data = [
+            'id' => $Type->id,
+            'Type' => $Type->type,
+            'permissions' => $Type->permission->pluck('id'),
+        ];
+        return response()->json($data, 200);
     }
 
     /**
