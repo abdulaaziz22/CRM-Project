@@ -75,10 +75,14 @@ class AuthController extends Controller
             $token = $user->createToken('authToken')->plainTextToken;
             $permissions=$user->type->permission->pluck('name');
             $user->type->unsetRelation('permission');
+            $hashedPermissions = [];
+            foreach ($permissions as $permission) {
+                $hashedPermissions[$permission] = $permission;
+            }
             return response()->json([
                 'access_token' => $token,
                 'user' => $user,
-                'permissions'=>$permissions
+                'permissions'=>$hashedPermissions
             ]);
         }
         else {
