@@ -34,7 +34,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user=User::with(['Type' , 'permission'])->findOrfail($id);
+        if(auth()->check() and auth()->user()->user_type_id==1)
+        {
+            $user=User::with(['Type' , 'permission'])->findOrfail($id);
         $data = [
             'id' => $user->id,
             'name' => $user->name,
@@ -42,9 +44,23 @@ class UserController extends Controller
             'image' => $user->image,
             'created_at' => $user->created_at,
             'UserType' => $user->Type->type,
-            'permission' => $user->Type->permission->pluck('display_name'),
+            'permission' => $user->Type->permission->pluck('id'),
         ];
-        return response()->json($data, 200);
+            return response()->json($data, 200);
+        }
+        else 
+        {
+            $user=User::with(['Type' , 'permission'])->findOrfail($id);
+            $data = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'username' => $user->username,
+                'image' => $user->image,
+                'created_at' => $user->created_at,
+                'UserType' => $user->Type->type,
+            ];
+            return response()->json($data, 200);
+        }
     }
 
     /**
@@ -57,9 +73,10 @@ class UserController extends Controller
         $User = User::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => ['required','max:100','string','min:2'],
-            'username'=>['required','min:6','max:25',Rule::unique('users')->ignore($user->id)],
+            'username'=>['required','min:6','max:25',Rule::unique('users')->ignore($User->id)],
             'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:9'],
             'user_type_id'=>['required',Rule::exists('user_types','id')],
+            'permissions' => ['array'],
             'image'=>['required',Rule::when($request->hasFile('image'),[file::types(['jpeg','bmp','png','jpg'])->max(2048)]),Rule::when(is_string($request->image),'string')],
         ]);
         if ($validator->fails()) {
@@ -84,6 +101,11 @@ class UserController extends Controller
             'user_type_id'=>$request->user_type_id,
             'image'=>$image,
         ]);
+
+        if ($request->permissions)
+        {
+            $users->permission()->sync($request->permissions);
+        }
         
         return response()->json([
             'message'=>'user successfully registered',
