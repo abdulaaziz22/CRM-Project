@@ -32,9 +32,19 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $user=User::with(['Type' , 'permission'])->findOrfail($id);
+        $data = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'username' => $user->username,
+            'image' => $user->image,
+            'created_at' => $user->created_at,
+            'UserType' => $user->Type->type,
+            'permission' => $user->Type->permission->pluck('display_name'),
+        ];
+        return response()->json($data, 200);
     }
 
     /**
