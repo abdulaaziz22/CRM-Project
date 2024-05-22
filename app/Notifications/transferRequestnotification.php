@@ -3,28 +3,31 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class Trackingnotification extends Notification
+class transferRequestnotification extends Notification
 {
     use Queueable;
 
     protected $tracking_id;
     protected $subject;
     protected $from_user;
-    protected $user_image;
+    protected $to_user;
+    protected $title_request;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct($Tracking_id,$Tracking_subject,$from_user,$user_image)
+    public function __construct($Tracking_id,$Tracking_subject,$from_user,$to_user,$title_request)
     {
         $this->tracking_id=$Tracking_id;
         $this->subject=$Tracking_subject;
         $this->from_user=$from_user;
-        $this->user_image=$user_image;
+        $this->to_user=$to_user;
+        $this->title_request=$title_request;
     }
 
     /**
@@ -59,26 +62,26 @@ class Trackingnotification extends Notification
             //
         ];
     }
-
     public function toDatabase(object $notifiable): array
     {
         return  [
             'id'=>$this->tracking_id,
             'subject'=>$this->subject,
             'from_user'=>$this->from_user,
-            'user_image'=>$this->user_image,
+            'to_user'=>$this->to_user,
+            'title_request'=>$this->title_request,
             'date'=>now()->format('Y-m-d H:i:s'),
         ];
     }
-
+    
     public function toBroadcast(object $notifiable)
     {
         return new BroadcastMessage([
             'id'=>$this->tracking_id,
             'subject'=>$this->subject,
             'from_user'=>$this->from_user,
-            'user_image'=>$this->user_image,
+            'to_user'=>$this->to_user,
+            'title_request'=>$this->title_request,
         ]);
     }
-
 }

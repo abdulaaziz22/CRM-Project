@@ -26,10 +26,9 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             PrioritySeeder::class,
             RequestStatusSeeder::class,
+            PermissionSeeder::class,
             UserTypeSeeder::class,
             UserSeeder::class,
-            PermissionSeeder::class,
-            UerTypePermissionSeeder::class,
         ]);
     }
 }

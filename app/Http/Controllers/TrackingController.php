@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tracking;
+use App\Models\Request as MyRequest;
+use Illuminate\Support\Str;
 use App\Events\PrivateTest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\validator;
 use App\Notifications\Trackingnotification;
 use App\Http\Controllers\FilePathController;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\transferRequestnotification;
 
 
 class TrackingController extends Controller
@@ -60,8 +63,25 @@ class TrackingController extends Controller
         if(!empty($request->file_path)){
             FilePathController::store($request,$MyRequest=null,$Tracking->id);
         }
+        
+        $from_user=auth()->user()->name;
+        $to_user=User::find($Tracking->to_user_id)->name;
+        $from_user_image=auth()->user()->image;
+        $tracking_id=$Tracking->id;
+        $title_request= MyRequest::find($Tracking->request_id)->title; 
+
+        //this notififcation for tacking notification 
         $user=User::find($Tracking->to_user_id);
-        Notification::send($user, new Trackingnotification($Tracking->id,$Tracking->subject,auth()->user()->name,auth()->user()->image));
+        $notification =new Trackingnotification($tracking_id,$Tracking->subject,$from_user,$from_user_image);
+        $notification->id = Str::uuid();
+        Notification::send($user, $notification); 
+
+        //this notification for Request Owner receved for each tracking for tacking Request
+        $owner_request = User::find(MyRequest::find($Tracking->request_id)->user_id);
+        $notification = new transferRequestnotification($tracking_id, $Tracking->subject,$from_user,$to_user, $title_request);
+        $notification->id = Str::uuid();
+        Notification::send($owner_request, $notification);
+
         return response()->json([
             'message'=>'Tracking successfully stored',
             'data'=>$Tracking,
