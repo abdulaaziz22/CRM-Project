@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
+use App\Models\User;
+use App\Models\College;
+use App\Models\Category;
 use App\Models\FilePath;
+use App\Models\Priority;
+use App\Models\Tracking;
 use Illuminate\Http\Request;
+use App\Models\RequestStatus;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Models\Request as MyRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\validator;
 use App\Http\Controllers\FilePathController;
-use App\Models\College;
-use App\Models\Priority;
-use App\Models\RequestStatus;
-use App\Models\Category;
-use App\Models\User;
-use App\Models\Room;
-use Illuminate\Support\Facades\DB;
 
 
 
@@ -25,7 +27,9 @@ class RequestController extends Controller
      */
     public function index()
     {
+        $user_tracking_request=Tracking::where('to_user_id','=',Auth::user()->id)->pluck('request_id');
         $requests = MyRequest::with(['College', 'RequestStatus', 'Category', 'Priority','User', 'Room'])
+        ->where('user_id','=',Auth::user()->id)->orWhereIn('id',$user_tracking_request)
         ->get()
         ->map(function ($request) {
         return [
