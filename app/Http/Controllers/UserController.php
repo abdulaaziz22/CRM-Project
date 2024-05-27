@@ -43,9 +43,10 @@ class UserController extends Controller
             'name' => $user->name,
             'username' => $user->username,
             'image' => $user->image,
+            'phone' => $user->phone,
             'created_at' => $user->created_at,
             'UserType' => $user->Type->type,
-            'permission' => $user->Type->permission->pluck('id'),
+            'permission' => $user->Type->permission->pluck('display_name'),
         ];
             return response()->json($data, 200);
         }
