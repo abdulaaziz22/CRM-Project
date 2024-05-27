@@ -59,9 +59,10 @@ return response()->json(['data' => $requests], 200);
         $validator = validator::make($request->all(),[
             'title'=>['required','min:2'],
             'description'=>['required','min:2'],
-            'room_id'=>['required',Rule::exists('rooms','id')],
+            'room_id'=>['nullable',Rule::exists('rooms','id')],
             'category_id'=>['required',Rule::exists('categories','id')],
-            'college_id'=>['required',Rule::exists('colleges','id')],
+            'college_id'=>['nullable',Rule::exists('colleges','id')],
+            'priority_id' =>['required',Rule::exists('priorities','id')],
             'file_path' => ['nullable'],
             'file_path.*' =>['file'],
         ]);

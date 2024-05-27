@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('priority_id')->nullable();
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('college_id');
+            $table->unsignedBigInteger('college_id')->nullable();
 
 
 
