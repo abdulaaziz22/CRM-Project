@@ -58,6 +58,7 @@ class UserController extends Controller
                 'name' => $user->name,
                 'username' => $user->username,
                 'image' => $user->image,
+                'phone' => $user->phone,
                 'created_at' => $user->created_at,
                 'UserType' => $user->Type->type,
             ];
