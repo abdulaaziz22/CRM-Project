@@ -17,7 +17,8 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        $User=User::dynamicPaginate();
+        $User=User::with(['Type'])->dynamicPaginate();
+        $User->makeVisible(['username']);
         return response()->json($User, 200);
     }
 
