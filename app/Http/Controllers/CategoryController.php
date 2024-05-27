@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\validator;
 
 class CategoryController extends Controller
 {
@@ -21,7 +23,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = validator::make($request->all(),[
+            'name'=>['required','min:2','max:100',Rule::unique('categories')],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $category=Category::create([
+            'name'=>$request->name
+        ]);
+        return response()->json([
+            'message'=>'category successfully stored',
+            'data'=>$category,
+        ], 200);
     }
 
     /**
