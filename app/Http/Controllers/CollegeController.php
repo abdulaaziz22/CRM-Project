@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\College;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\validator;
 
 class CollegeController extends Controller
 {
@@ -21,7 +23,20 @@ class CollegeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = validator::make($request->all(),[
+            'name'=>['required','min:2','max:100',Rule::unique('colleges')],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $college=College::create([
+            'name'=>$request->name
+        ]);
+        return response()->json([
+            'message'=>'college successfully stored',
+            'data'=>$college,
+        ], 200);
+        
     }
 
     /**
