@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if(auth()->check() and auth()->user()->user_type_id==1)
+        if(auth()->user()->isAdmin())
         {
             $user=User::with(['Type' , 'permission'])->findOrfail($id);
         $data = [
@@ -105,7 +105,7 @@ class UserController extends Controller
             'image'=>$image,
         ]);
 
-        if ($request->permissions)
+        if ($request->permissions && auth()->user()->isAdmin())
         {
             $users->permission()->sync($request->permissions);
         }

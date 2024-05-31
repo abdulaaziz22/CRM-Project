@@ -71,7 +71,11 @@ class User extends Authenticatable
 
     public static function hasPermission($permission)
     {
-        // return UserType::find(auth()->user()->Type->id)->permission;
         return auth()->user()->Type->permission->contains('name', $permission);
+    }
+
+    public static function isAdmin()
+    {
+        return auth()->user()->Type->type === 'ادمن';
     }
 }
