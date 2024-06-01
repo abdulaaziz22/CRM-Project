@@ -45,8 +45,8 @@ class UserController extends Controller
             'image' => $user->image,
             'phone' => $user->phone,
             'created_at' => $user->created_at,
-            'UserType' => $user->Type->type,
-            'permission' => $user->Type->permission->pluck('display_name'),
+            'UserType' => $user->Type,
+            'permission' => $user->permission->pluck('display_name'),
         ];
             return response()->json($data, 200);
         }
@@ -60,7 +60,7 @@ class UserController extends Controller
                 'image' => $user->image,
                 'phone' => $user->phone,
                 'created_at' => $user->created_at,
-                'UserType' => $user->Type->type,
+                'UserType' => $user->Type,
             ];
             return response()->json($data, 200);
         }
@@ -80,7 +80,7 @@ class UserController extends Controller
             'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:9'],
             'user_type_id'=>['required',Rule::exists('user_types','id')],
             'permissions' => ['array'],
-            'image'=>['required',Rule::when($request->hasFile('image'),[file::types(['jpeg','bmp','png','jpg'])->max(2048)]),Rule::when(is_string($request->image),'string')],
+            'image'=>[Rule::when($request->hasFile('image'),[file::types(['jpeg','bmp','png','jpg'])->max(2048)]),Rule::when(is_string($request->image),'string')],
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
