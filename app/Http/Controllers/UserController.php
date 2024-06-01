@@ -46,7 +46,8 @@ class UserController extends Controller
             'phone' => $user->phone,
             'created_at' => $user->created_at,
             'UserType' => $user->Type,
-            'permission' => $user->permission->pluck('display_name'),
+            'permission' =>  $user->permission->pluck('display_name')
+            ->merge($user->type->permission->pluck('display_name'))
         ];
             return response()->json($data, 200);
         }
@@ -107,7 +108,7 @@ class UserController extends Controller
 
         if ($request->permissions && auth()->user()->isAdmin())
         {
-            $users->permission()->sync($request->permissions);
+            $User->permission()->sync($request->permissions);
         }
         
         return response()->json([
