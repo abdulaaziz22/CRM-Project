@@ -16,6 +16,12 @@ class Building extends Model
      */
     protected $fillable = ['name','college_id'];
     protected $filters = ['college_id'];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['college_id'];
 
     public function College ()
     {

@@ -14,7 +14,7 @@ class BuildingController extends Controller
      */
     public function index() //  https://example.com?college_id=[value]
     {
-        $Bulids=Building::filter()->dynamicPaginate();
+        $Bulids=Building::with(['College'])->filter()->dynamicPaginate();
         return response()->json($Bulids, 200);
     }
 
@@ -59,8 +59,13 @@ class BuildingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Building $building)
+    public function destroy($id)
     {
-        //
+        $Building=Building::findorfail($id);
+        $Building->delete();
+        return response()->json([
+            'message'=>'Building successfully deleted',
+            'data'=>$Building,
+        ], 200);
     }
 }
