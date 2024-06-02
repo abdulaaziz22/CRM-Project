@@ -14,7 +14,7 @@ class RoomController extends Controller
      */
     public function index() //  https://example.com?build_id=[value] | https://example.com?type_id=[value]
     {
-        $Rooms=Room::filter()->dynamicPaginate();
+        $Rooms=Room::with(['RoomType:id,name','Building:id,name'])->filter()->dynamicPaginate();
         return response()->json($Rooms, 200);
     }
 
