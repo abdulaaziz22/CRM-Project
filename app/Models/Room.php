@@ -16,6 +16,12 @@ class Room extends Model
      */
     protected $fillable = ['name','build_id','type_id'];
     protected $filters = ['build_id','type_id'];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['build_id','type_id'];
     public function RoomType()
     {
         return $this->belongsTo(RoomType::class,'type_id','id');
