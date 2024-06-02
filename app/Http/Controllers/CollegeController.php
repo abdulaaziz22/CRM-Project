@@ -58,8 +58,13 @@ class CollegeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(College $college)
+    public function destroy($id)
     {
-        //
+        $College=College::findorfail($id);
+        $College->delete();
+        return response()->json([
+            'message'=>'College successfully deleted',
+            'data'=>$College,
+        ], 200);
     }
 }
