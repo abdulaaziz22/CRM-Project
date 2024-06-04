@@ -106,13 +106,15 @@ class UserController extends Controller
             'image'=>$image,
         ]);
 
-        if ($request->permissions && auth()->user()->isAdmin())
-        {
-            $User->permission()->sync($request->permissions);
-        }
+        $UserTypePermissions = $User->Type->permission->pluck('id')->toArray();
+        $Permissions = array_diff($request->permissions, $UserTypePermissions);
         
+        if (!empty($Permissions)) {
+          $User->permission()->syncWithoutDetaching($Permissions);
+        }
+         
         return response()->json([
-            'message'=>'user successfully registered',
+            'message'=>'user successfully updated',
             'user'=>$users
         ],201);
         
