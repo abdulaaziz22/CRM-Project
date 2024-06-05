@@ -47,7 +47,7 @@ class UserController extends Controller
             'created_at' => $user->created_at,
             'UserType' => $user->Type,
             'permission' =>  $user->permission->pluck('id')
-            ->merge($user->type->permission->pluck('id'))
+            ->merge($user->type->permission->pluck('id'))->unique()
         ];
             return response()->json($data, 200);
         }
