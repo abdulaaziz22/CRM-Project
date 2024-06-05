@@ -25,7 +25,7 @@ class RequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() 
     {
         $user_tracking_request=Tracking::where('to_user_id','=',Auth::user()->id)->pluck('request_id');
         $requests = MyRequest::with(['College', 'RequestStatus', 'Category', 'Priority','User', 'Room'])
