@@ -33,6 +33,10 @@ class PermissionSeeder extends Seeder
             'create_Building' => 'انشاء المبنى ',
             'delete_Building' => 'حدف المبنى ',
             'show_Building' => 'عرض المباني ',
+            'show_Category' => 'عرض الانواع ',
+            'create_Category' => 'انشاء نوع ',
+            'delete_Category' => 'حدف نوع ',
+
         ];
         foreach ($permissions as $name => $display_name) {
             Permission::create(['name' => $name, 'display_name' => $display_name]);

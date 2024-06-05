@@ -14,6 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Category::class);
         $Categories=Category::get();
         return response()->json($Categories, 200);
     }
@@ -23,6 +24,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Category::class);
         $validator = validator::make($request->all(),[
             'name'=>['required','min:2','max:100',Rule::unique('categories')],
         ]);
@@ -57,8 +59,15 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $CheckPoliciy = Category::findOrFail($id);
+        $this->authorize('delete',$CheckPoliciy);
+        $Category=Category::findorfail($id);
+        $Category->delete();
+        return response()->json([
+            'message'=>'Category successfully deleted',
+            'data'=>$Category,
+        ], 200);
     }
 }

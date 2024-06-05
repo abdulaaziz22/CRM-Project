@@ -8,12 +8,14 @@ use App\Models\Request as MyRequest;
 use App\Models\Tracking;
 use App\Models\User;
 use App\Models\Building;
+use App\Models\Category;
 use App\Models\UserType;
 use App\Policies\RequestPolicy;
 use App\Policies\TrackingPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\UserTypePolicy;
 use App\Policies\BuildingPolicy;
+use App\Policies\CategoryPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         UserType::class => UserTypePolicy::class,
         Building::class => BuildingPolicy::class,
+        Category::class => CategoryPolicy::class,
 
         //
     ];
