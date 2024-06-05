@@ -14,6 +14,7 @@ class BuildingController extends Controller
      */
     public function index() //  https://example.com?college_id=[value]
     {
+        $this->authorize('viewAny', Building::class);
         $Bulids=Building::with(['College'])->filter()->dynamicPaginate();
         return response()->json($Bulids, 200);
     }
@@ -23,6 +24,7 @@ class BuildingController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Building::class);
         $validator=Validator::make($request->all(),[
             'name'=>['required','max:100','min:2','string',Rule::unique('buildings')],
             'college_id'=>['required',Rule::exists('colleges','id')]
@@ -61,6 +63,8 @@ class BuildingController extends Controller
      */
     public function destroy($id)
     {
+        $CheckPoliciy = Building::findOrFail($id);
+        $this->authorize('delete',$CheckPoliciy);
         $Building=Building::findorfail($id);
         $Building->delete();
         return response()->json([

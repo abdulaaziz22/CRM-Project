@@ -30,6 +30,9 @@ class PermissionSeeder extends Seeder
             'show_UserType' => 'عرض نوع الحساب',
             'delete_UserType' => 'حدف نوع الحساب',
             'update_UserType' => 'تعديل نوع الحساب',
+            'create_Building' => 'انشاء المبنى ',
+            'delete_Building' => 'حدف المبنى ',
+            'show_Building' => 'عرض المباني ',
         ];
         foreach ($permissions as $name => $display_name) {
             Permission::create(['name' => $name, 'display_name' => $display_name]);
