@@ -36,6 +36,10 @@ class PermissionSeeder extends Seeder
             'show_Category' => 'عرض الانواع ',
             'create_Category' => 'انشاء نوع ',
             'delete_Category' => 'حدف نوع ',
+            'create_College' => 'انشاء كلية ',
+            'delete_College' => 'حدف كلية ',
+            'show_College' => 'عرض الكليات ',
+
 
         ];
         foreach ($permissions as $name => $display_name) {

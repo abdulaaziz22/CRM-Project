@@ -14,6 +14,7 @@ class CollegeController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', College::class);
         $Colleges=College::dynamicPaginate();
         return response()->json($Colleges, 200);
     }
@@ -23,6 +24,7 @@ class CollegeController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', College::class);
         $validator = validator::make($request->all(),[
             'name'=>['required','min:2','max:100',Rule::unique('colleges')],
         ]);
@@ -60,6 +62,8 @@ class CollegeController extends Controller
      */
     public function destroy($id)
     {
+        $CheckPoliciy = College::findOrFail($id);
+        $this->authorize('delete',$CheckPoliciy);
         $College=College::findorfail($id);
         $College->delete();
         return response()->json([

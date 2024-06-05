@@ -8,6 +8,7 @@ use App\Models\Request as MyRequest;
 use App\Models\Tracking;
 use App\Models\User;
 use App\Models\Building;
+use App\Models\College;
 use App\Models\Category;
 use App\Models\UserType;
 use App\Policies\RequestPolicy;
@@ -16,6 +17,7 @@ use App\Policies\UserPolicy;
 use App\Policies\UserTypePolicy;
 use App\Policies\BuildingPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\CollegePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         UserType::class => UserTypePolicy::class,
         Building::class => BuildingPolicy::class,
         Category::class => CategoryPolicy::class,
+        College::class => CollegePolicy::class,
 
         //
     ];
