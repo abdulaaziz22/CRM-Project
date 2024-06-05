@@ -14,6 +14,7 @@ class RoomController extends Controller
      */
     public function index() //  https://example.com?build_id=[value] | https://example.com?type_id=[value]
     {
+        $this->authorize('viewAny', Room::class);
         $Rooms=Room::with(['RoomType:id,name','Building:id,name'])->filter()->dynamicPaginate();
         return response()->json($Rooms, 200);
     }
@@ -23,6 +24,7 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Room::class);
         $validator=Validator::make($request->all(),[
             'name'=>['required','max:100','min:2','string',Rule::unique('rooms')],
             'build_id'=>['required',Rule::exists('colleges','id')],
@@ -63,6 +65,8 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
+        $CheckPoliciy = Room::findOrFail($id);
+        $this->authorize('delete',$CheckPoliciy);
         $room=Room::findorfail($id);
         $room->delete();
         return response()->json([
