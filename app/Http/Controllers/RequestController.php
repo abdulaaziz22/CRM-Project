@@ -37,11 +37,11 @@ class RequestController extends Controller
             'title' => $request->title,
             'created_at' => $request->created_at,
             'updated_at' => $request->updated_at,
-            'college' => $request->college->name,
+            'college' => $request->college->name ?? null,
             'priority' => $request->priority->name ?? null,
             'status' => $request->requestStatus->status,
             'category' => $request->category->name,
-            'room' => $request->room->name,
+            'room' => $request->room->name ?? null,
             'user' => $request->user->name,
         ];
     });
