@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Building;
 use App\Models\College;
 use App\Models\Room;
+use App\Models\RoomType;
 use App\Models\Category;
 use App\Models\UserType;
 use App\Policies\RequestPolicy;
@@ -20,6 +21,8 @@ use App\Policies\BuildingPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\CollegePolicy;
 use App\Policies\RoomPolicy;
+use App\Policies\RoomTypePolicy;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -37,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         Category::class => CategoryPolicy::class,
         College::class => CollegePolicy::class,
         Room::class => RoomPolicy::class,
+        RoomType::class => RoomTypePolicy::class,
 
         //
     ];

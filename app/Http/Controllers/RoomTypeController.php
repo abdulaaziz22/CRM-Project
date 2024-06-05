@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\RoomType;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\validator;
 use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
@@ -12,6 +14,7 @@ class RoomTypeController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', RoomType::class);
         $RoomTypes=RoomType::dynamicPaginate();
         return response()->json($RoomTypes, 200);
     }
@@ -21,7 +24,20 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', RoomType::class);
+        $validator = validator::make($request->all(),[
+            'name'=>['required','min:2','max:100',Rule::unique('room_types')],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $RoomType=RoomType::create([
+            'name'=>$request->name
+        ]);
+        return response()->json([
+            'message'=>'RoomType successfully stored',
+            'data'=>$RoomType,
+        ], 200);
     }
 
     /**
@@ -43,8 +59,15 @@ class RoomTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RoomType $roomType)
+    public function destroy($id)
     {
-        //
+        $CheckPoliciy = RoomType::findOrFail($id);
+        $this->authorize('delete',$CheckPoliciy);
+        $RoomType=RoomType::findorfail($id);
+        $RoomType->delete();
+        return response()->json([
+            'message'=>'RoomType successfully deleted',
+            'data'=>$RoomType,
+        ], 200);
     }
 }
