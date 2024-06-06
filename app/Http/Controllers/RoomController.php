@@ -55,9 +55,28 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, $id)
     {
-        //
+        $CheckPoliciy = Room::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
+        $Room= Room::findOrFail($id);
+        $validator=Validator::make($request->all(),[
+            'name'=>['required','max:100','min:2','string',Rule::unique('rooms')->ignore($Room->id)],
+            'build_id'=>['required',Rule::exists('colleges','id')],
+            'type_id'=>['required',Rule::exists('room_types','id')]
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $Room->update([
+            'name'=>$request->name,
+            'build_id'=>$request->build_id,
+            'type_id'=>$request->type_id
+        ]);
+        return response()->json([
+            'message'=>'room successfully stored',
+            'data'=>$Room,
+        ], 201);
     }
 
     /**

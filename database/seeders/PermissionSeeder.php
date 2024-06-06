@@ -45,6 +45,7 @@ class PermissionSeeder extends Seeder
             'show_Room' => 'عرض الغرف',
             'create_Room' => 'انشاء غرفة',
             'delete_Room' => 'حذف غرفة ',
+            'update_Room' => 'تعديل غرفة ',
             'delete_RoomType' => 'حذف نوع الغرفة',
             'create_RoomType' => 'انشاء نوع الغرفة',
             'show_RoomType' => 'عرض انواع الغرف',
