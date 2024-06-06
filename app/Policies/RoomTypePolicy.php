@@ -37,7 +37,7 @@ class RoomTypePolicy
      */
     public function update(User $user, RoomType $roomType): bool
     {
-        //
+        return $user->hasPermission('update_RoomType');
     }
 
     /**

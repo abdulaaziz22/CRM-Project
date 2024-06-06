@@ -49,6 +49,7 @@ class PermissionSeeder extends Seeder
             'delete_RoomType' => 'حذف نوع الغرفة',
             'create_RoomType' => 'انشاء نوع الغرفة',
             'show_RoomType' => 'عرض انواع الغرف',
+            'update_RoomType' => 'تعديل نوع الغرفة',
         ];
         foreach ($permissions as $name => $display_name) {
             Permission::create(['name' => $name, 'display_name' => $display_name]);
