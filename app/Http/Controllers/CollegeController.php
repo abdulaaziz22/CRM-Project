@@ -52,9 +52,24 @@ class CollegeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, College $college)
+    public function update(Request $request, $id)
     {
-        //
+        $CheckPoliciy = College::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
+        $college = College::findOrFail($id);
+        $validator = validator::make($request->all(),[
+            'name'=>['required','min:2','max:100',Rule::unique('colleges')->ignore($college->id)],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $college->update([
+            'name'=>$request->name
+        ]);
+        return response()->json([
+            'message'=>'college successfully stored',
+            'data'=>$college,
+        ], 201);
     }
 
     /**

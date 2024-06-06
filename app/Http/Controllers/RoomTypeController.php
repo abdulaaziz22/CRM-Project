@@ -51,9 +51,24 @@ class RoomTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RoomType $roomType)
+    public function update(Request $request, $id)
     {
-        //
+        $CheckPoliciy = RoomType::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
+        $RoomType = RoomType::findOrFail($id);
+        $validator = validator::make($request->all(),[
+            'name'=>['required','min:2','max:100',Rule::unique('room_types')->ignore($RoomType->id)],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $RoomType->update([
+            'name'=>$request->name
+        ]);
+        return response()->json([
+            'message'=>'RoomType successfully stored',
+            'data'=>$RoomType,
+        ], 201);
     }
 
     /**

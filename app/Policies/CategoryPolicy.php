@@ -37,7 +37,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        //
+        return $user->hasPermission('update_Category');
     }
 
     /**

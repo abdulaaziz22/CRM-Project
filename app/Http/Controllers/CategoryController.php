@@ -51,9 +51,24 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,$id)
     {
-        //
+        $CheckPoliciy = Category::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
+        $Category = Category::findOrFail($id);
+        $validator = validator::make($request->all(),[
+            'name'=>['required','min:2','max:100',Rule::unique('categories')->ignore($Category->id)],
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $Category->update([
+            'name'=>$request->name
+        ]);
+        return response()->json([
+            'message'=>'category successfully stored',
+            'data'=>$Category,
+        ], 201);
     }
 
     /**

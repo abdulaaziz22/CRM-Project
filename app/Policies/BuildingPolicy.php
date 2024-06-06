@@ -37,7 +37,7 @@ class BuildingPolicy
      */
     public function update(User $user, Building $building): bool
     {
-        //
+        return $user->hasPermission('update_Building');
     }
 
     /**
