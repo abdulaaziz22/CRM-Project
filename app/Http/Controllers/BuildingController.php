@@ -26,7 +26,7 @@ class BuildingController extends Controller
     {
         $this->authorize('create', Building::class);
         $validator=Validator::make($request->all(),[
-            'name'=>['required','max:100','min:2','string',Rule::unique('buildings')],
+            'name'=>['required','max:100','min:1','string',Rule::unique('buildings')],
             'college_id'=>['required',Rule::exists('colleges','id')]
         ]);
         if ($validator->fails()) {
@@ -53,9 +53,26 @@ class BuildingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Building $building)
+    public function update(Request $request, $id)
     {
-        //
+        // $CheckPoliciy = Building::findOrFail($id);
+        // $this->authorize('update', $CheckPoliciy);
+        $Bulids = Building::findOrFail($id);
+        $validator=Validator::make($request->all(),[
+            'name'=>['required','max:100','min:1','string',Rule::unique('buildings')->ignore($Bulids->id)],
+            'college_id'=>['required',Rule::exists('colleges','id')]
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $Bulids->update([
+            'name'=>$request->name,
+            'college_id'=>$request->college_id
+        ]);
+        return response()->json([
+            'message'=>'Building successfully stored',
+            'data'=>$Bulids,
+        ], 200);
     }
 
     /**
