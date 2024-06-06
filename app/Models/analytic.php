@@ -30,12 +30,14 @@ class analytic extends Model
                       ->whereMonth('date', $month)
                       ->whereYear('date', $year)
                       ->groupBy('day', 'month', 'year');
-    } else {
-        // Handle the case where $value is not in the expected format
+    } elseif(count($dateComponents) == 1) {
         $year = $dateComponents[0];
         return $query->selectRaw('MONTH(date) as month, SUM(total_requests) as total_requests, SUM(completed_requests) as completed_requests')
         ->whereYear('date', $year)
         ->groupBy('month');;
+    }
+    else{
+        return $query;
     }
     }
 }
