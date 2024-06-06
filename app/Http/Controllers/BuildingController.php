@@ -55,8 +55,8 @@ class BuildingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $CheckPoliciy = Building::findOrFail($id);
-        // $this->authorize('update', $CheckPoliciy);
+        $CheckPoliciy = Building::findOrFail($id);
+        $this->authorize('update', $CheckPoliciy);
         $Bulids = Building::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name'=>['required','max:100','min:1','string',Rule::unique('buildings')->ignore($Bulids->id)],
