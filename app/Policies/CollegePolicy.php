@@ -37,7 +37,7 @@ class CollegePolicy
      */
     public function update(User $user, College $college): bool
     {
-        //
+        return $user->hasPermission('update_College');
     }
 
     /**

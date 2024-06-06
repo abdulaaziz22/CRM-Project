@@ -41,6 +41,7 @@ class PermissionSeeder extends Seeder
             'create_College' => 'انشاء كلية',
             'delete_College' => 'حذف كلية',
             'show_College' => 'عرض الكليات',
+            'update_College' => 'تعديل الكليات',
             'show_Room' => 'عرض الغرف',
             'create_Room' => 'انشاء غرفة',
             'delete_Room' => 'حذف غرفة ',
