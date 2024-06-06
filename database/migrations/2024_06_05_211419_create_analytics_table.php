@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->integer('total_requests');
-            $table->number('completed_requests');
+            $table->integer('completed_requests');
             $table->timestamps();
         });
     }
