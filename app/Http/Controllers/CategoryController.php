@@ -68,7 +68,7 @@ class CategoryController extends Controller
         return response()->json([
             'message'=>'category successfully stored',
             'data'=>$Category,
-        ], 200);
+        ], 201);
     }
 
     /**

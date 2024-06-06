@@ -72,7 +72,7 @@ class BuildingController extends Controller
         return response()->json([
             'message'=>'Building successfully stored',
             'data'=>$Bulids,
-        ], 200);
+        ], 201);
     }
 
     /**
