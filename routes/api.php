@@ -17,7 +17,8 @@ use App\Http\Controllers\{
     TrackingController,
     NotificationController,
     PermissionController,
-    UserController
+    UserController,
+    AnalyticController
 };
 
 /*
@@ -38,6 +39,7 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::group(['middleware' => ['auth:sanctum','NotifyAsRead']], function () {
     Route::apiResource('College',CollegeController::class);
+    Route::apiResource('Analytic',AnalyticController::class);
     Route::apiResource('Building',BuildingController::class);
     Route::apiResource('RoomType',RoomTypeController::class);
     Route::apiResource('Room',RoomController::class);

@@ -15,6 +15,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\Request as MyRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\validator;
 use App\Http\Controllers\FilePathController;
 
@@ -83,6 +84,10 @@ return response()->json(['data' => $requests], 200);
         if(!empty($request->file_path)){
             FilePathController::store($request,$MyRequest->id,$tracking_id=null);
         }
+        Artisan::call('run:analytic', [
+            'id' => $MyRequest->id,
+            'status' =>'create'
+        ]);
         return response()->json([
             'message'=>'Request successfully stored',
             'data'=>$MyRequest,
@@ -136,10 +141,18 @@ return response()->json(['data' => $requests], 200);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+        $status1=$MyRequest->status_id;
         $MyRequest->update([
             'status_id' => $request->status_id,
             'priority_id' => $request->priority_id,
         ]);
+        $status2=$MyRequest->status_id;
+        if(($status1 != $status2) && ($status2 == 3) ){
+            Artisan::call('run:analytic', [
+                'id' => $MyRequest->id,
+                'status' =>'completed'
+            ]);
+        }
         return response()->json([
             'message'=>'Request successfully updated',
             'data'=>$MyRequest,
