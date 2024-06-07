@@ -12,7 +12,7 @@ class AnalyticController extends Controller
      */
     public function index()
     {
-        $analytic=analytic::filter()->get();
+        $analytic=analytic::filter();
         return response()->json($analytic, 200);
 
     }
