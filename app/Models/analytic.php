@@ -26,15 +26,33 @@ class analytic extends Model
         $year = $dateComponents[0];
         $month = $dateComponents[1];
 
-        return $query->selectRaw('DAY(date) as day, MONTH(date) as month, YEAR(date) as year, SUM(total_requests) as total_requests, SUM(completed_requests) as completed_requests')
+        $result=$query->selectRaw('DAY(date) as day, MONTH(date) as month, YEAR(date) as year, SUM(total_requests) as total_requests, SUM(completed_requests) as completed_requests')
                       ->whereMonth('date', $month)
                       ->whereYear('date', $year)
-                      ->groupBy('day', 'month', 'year');
+                      ->groupBy('day', 'month', 'year')
+                      ->get()
+                      ->toarray();
+        $total_requests=array_column($result, 'total_requests');
+        $completed_requests =array_column($result, 'completed_requests');
+        $output = [
+            'total_requests' => $total_requests,
+            'completed_requests' => $completed_requests
+        ];
+        return  $output;
     } elseif(count($dateComponents) == 1) {
         $year = $dateComponents[0];
-        return $query->selectRaw('MONTH(date) as month, SUM(total_requests) as total_requests, SUM(completed_requests) as completed_requests')
+        $result=$query->selectRaw('MONTH(date) as month, SUM(total_requests) as total_requests, SUM(completed_requests) as completed_requests')
         ->whereYear('date', $year)
-        ->groupBy('month');;
+        ->groupBy('month')
+        ->get()
+        ->toarray();
+        $total_requests=array_column($result, 'total_requests');
+        $completed_requests =array_column($result, 'completed_requests');
+        $output = [
+            'total_requests' => $total_requests,
+            'completed_requests' => $completed_requests
+        ];
+        return  $output;
     }
     else{
         return $query;
