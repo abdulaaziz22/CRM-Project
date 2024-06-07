@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum','NotifyAsRead']], function () {
     Route::apiResource('User',UserController::class);
     Route::apiResource('Permission',PermissionController::class);
     Route::post('logout',[AuthController::class,'logout']);
+    Route::post('changePassword/{id}',[AuthController::class,'changePassword']);
     Route::get('user',[AuthController::class,'index']);
     Route::get('Notifications/unread',[NotificationController::class,'UnreadNotifications']);
     Route::get('Notifications/all',[NotificationController::class,'AllNotifications']);

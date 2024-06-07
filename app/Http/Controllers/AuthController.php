@@ -98,5 +98,30 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-
+    public function changePassword(Request $request , $id)
+    {
+        $validator=Validator::make($request->all(),[
+            'password'=>'required|min:6|confirmed',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $user=User::findOrfail($id);
+        if(auth()->user()->isAdmin())
+        {
+                $user->update([
+                    'password'=>$request->password,
+                ]);
+                $user->tokens()->delete();
+                return response()->json([
+                    'message'=>'المسئول :'. $user->username .' تم تغيير كلمة مرور المستخدم'
+                ], 200);
+            }
+            else
+            {
+                return response()->json([
+                    'message'=>'ليس لديك صلاحية لتغير باسورد هدا المستخدم'
+                ], 200);
+            }
+        }
 }
