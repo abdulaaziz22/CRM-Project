@@ -18,7 +18,7 @@ class AnalyticController extends Controller
         return response()->json($analytic, 200);
 
     }
-    public function topUsers()
+    public function top3Users()
     {
         $result = User::select('users.id', 'users.name', 
         DB::raw('COUNT(trackings.id) as total_tracking'),
