@@ -26,7 +26,7 @@ class AnalyticController extends Controller
         ->leftJoin('trackings', 'users.id', '=', 'trackings.to_user_id')
         ->groupBy('users.id', 'users.name')
         ->orderByDesc(DB::raw('SUM(CASE WHEN trackings.enddate IS NOT NULL THEN 1 ELSE 0 END) / COUNT(trackings.id) * 100'))
-        ->take(10)
+        ->take(3)
         ->get()
         ->map(function ($item) {
             $item->completion_rate = $item->total_tracking == 0 ? 0 : ($item->completed_tracking / $item->total_tracking * 100);
