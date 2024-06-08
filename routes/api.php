@@ -56,8 +56,7 @@ Route::group(['middleware' => ['auth:sanctum','NotifyAsRead']], function () {
     Route::get('user',[AuthController::class,'index']);
     Route::get('Notifications/unread',[NotificationController::class,'UnreadNotifications']);
     Route::get('Notifications/all',[NotificationController::class,'AllNotifications']);
-
-
+    Route::get('topUsers',[AnalyticController::class,'topUsers']);
 });
 
 Route::group(['middleware' => ['guest:sanctum']], function () {
