@@ -35,10 +35,10 @@ class AnalyticController extends Controller
         ->values()
         ->toArray();
 
-return [
-    'users' => array_column($result, 'name'),
-    'completion_rates' => array_column($result, 'completion_rate')
-];
+        return [
+            'users' => array_column($result, 'name'),
+            'completion_rates' => array_column($result, 'completion_rate')
+        ];
 
         
     }
