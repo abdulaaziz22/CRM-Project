@@ -9,11 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Request as MyRequest;
 use App\Models\UserType;
+use Mehradsadeghi\FilterQueryString\FilterQueryString;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,FilterQueryString;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'image',
         'user_type_id'
     ];
+    protected $filters = ['users.id'];
 
     /**
      * The attributes that should be hidden for serialization.

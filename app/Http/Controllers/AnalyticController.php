@@ -42,7 +42,20 @@ class AnalyticController extends Controller
 
         
     }
-    /**
+   
+    public function userAnalytic($id) {
+        $result=User::filter()->select('users.id', 'users.name',
+        DB::raw('COUNT(trackings.id) as total_tracking'),
+        DB::raw('SUM(CASE WHEN trackings.enddate IS NOT NULL THEN 1 ELSE 0 END) as completed_tracking'))
+        ->leftJoin('trackings', 'users.id', '=', 'trackings.to_user_id')
+        ->groupBy('users.id', 'users.name')
+        ->orderByDesc(DB::raw('SUM(CASE WHEN trackings.enddate IS NOT NULL THEN 1 ELSE 0 END) / COUNT(trackings.id) * 100'))
+        ->findOrFail($id)
+        // ->values()
+        ->toArray();
+        return  $result;
+    }
+     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
